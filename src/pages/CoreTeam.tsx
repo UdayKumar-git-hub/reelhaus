@@ -40,8 +40,8 @@ const CoreTeam = () => {
     },
     {
       role: "Technical Head",
-      name: "Devansh V Purohit",
-      year: "2nd Yr AIML",
+      name: "Yeshwanth Reddy",
+      year: "1st Year Mech",
       icon: <Settings className="w-6 h-6" />,
       description: "Managing technical infrastructure and development"
     },
