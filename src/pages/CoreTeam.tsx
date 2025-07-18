@@ -6,7 +6,7 @@ const CoreTeam = () => {
     {
       role: "President",
       name: "Nandana",
-      year: "2nd Yr AIML",
+      year: "2nd Yr CSE",
       icon: <Crown className="w-6 h-6" />,
       description: "Leading the club's vision and strategic direction"
     },
