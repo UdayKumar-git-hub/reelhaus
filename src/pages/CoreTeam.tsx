@@ -99,7 +99,7 @@ const CoreTeam = () => {
       name: "Snehas",
       year: "1st Yr Aero",
       icon: <Truck className="w-6 h-6" />,
-      description: "Coordinating logistics and media production"
+      description: "Cuts and Cooks"
     }
   ];
 
