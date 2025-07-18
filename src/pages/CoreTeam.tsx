@@ -47,8 +47,8 @@ const CoreTeam = () => {
     },
     {
       role: "CP/PR Head",
-      name: "Prathima",
-      year: "1st Yr IT",
+      name: "Akshitha ",
+      year: "1st Yr Mech",
       icon: <Megaphone className="w-6 h-6" />,
       description: "Handling corporate partnerships and public relations"
     },
@@ -68,8 +68,8 @@ const CoreTeam = () => {
     },
     {
       role: "Co-head",
-      name: "Kamalika",
-      year: "1st Yr IT",
+      name: "Brahmini",
+      year: "1st Yr ECE",
       icon: <Shield className="w-6 h-6" />,
       description: "Supporting various club activities and initiatives"
     },
@@ -91,6 +91,13 @@ const CoreTeam = () => {
       role: "Logistics and Media",
       name: "Charan",
       year: "1st Yr ECE",
+      icon: <Truck className="w-6 h-6" />,
+      description: "Coordinating logistics and media production"
+    },
+    {
+      role: "Video Editor",
+      name: "Snehas",
+      year: "1st Yr Aero",
       icon: <Truck className="w-6 h-6" />,
       description: "Coordinating logistics and media production"
     }
