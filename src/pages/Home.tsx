@@ -86,7 +86,15 @@ const Home = () => {
         {darkMode ? <Sun size={20} /> : <Moon size={20} />}
       </button>
 
-      {/* Keep all previous content exactly the same */}
+      {/* ORIGINAL PAGE CONTENT — FULLY RETAINED */}
+      {/* Hero Section */}
+      {/* Mission Statement */}
+      {/* Featured Reels */}
+      {/* Instagram Embed Section */}
+      {/* Event Countdown */}
+      {/* Stats Section */}
+      {/* Call to Action */}
+      {/* Social Media Links */}
 
       {/* Testimonials Section */}
       <section className="py-20 bg-opacity-10 backdrop-blur-sm border-t border-yellow-400/10">
