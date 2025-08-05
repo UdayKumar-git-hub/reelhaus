@@ -8,6 +8,7 @@ const CoreTeam = () => {
       name: "Nandana",
       year: "2nd Yr CSE",
       icon: <Crown className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Leading the club's vision and strategic direction"
     },
     {
@@ -25,14 +26,14 @@ const CoreTeam = () => {
       description: "Supporting operations and team coordination"
     },
     {
-      role: " Content Curator and Design Head",
+      role: "Content Curator and Design Head",
       name: "L.UdayKumar",
       year: "1st Yr",
       icon: <Settings className="w-6 h-6" />,
       description: "Overseeing visual design and creative direction"
     },
     {
-      role: " Co-Head",
+      role: "Co-Head",
       name: "Tharun",
       year: "1st Yr",
       icon: <Settings className="w-6 h-6" />,
@@ -125,34 +126,26 @@ const CoreTeam = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
               <div
-  key={index}
-  className="relative rounded-2xl overflow-hidden border border-yellow-400/20 hover:border-yellow-400/50 transition-all duration-300 group hover:scale-105"
-  style={{
-    backgroundImage: `url(${member.image || 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400'})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }}
->
-  <div className="bg-black/70 backdrop-blur-sm p-8 h-full w-full">
-    <div className="text-center">
-      <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-yellow-400/50 transition-all duration-300">
-        <div className="text-black">
-          {member.icon}
-        </div>
-      </div>
-      <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
-      <div className="text-yellow-400 font-semibold text-lg mb-2">{member.role}</div>
-      <div className="text-gray-400 text-sm mb-4">{member.year}</div>
-      <p className="text-gray-300 text-sm leading-relaxed">{member.description}</p>
-    </div>
-  </div>
-</div>
-
-                  
-                  <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
-                  <div className="text-yellow-400 font-semibold text-lg mb-2">{member.role}</div>
-                  <div className="text-gray-400 text-sm mb-4">{member.year}</div>
-                  <p className="text-gray-300 text-sm leading-relaxed">{member.description}</p>
+                key={index}
+                className="relative rounded-2xl overflow-hidden border border-yellow-400/20 hover:border-yellow-400/50 transition-all duration-300 group hover:scale-105"
+                style={{
+                  backgroundImage: `url(${member.image || 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400'})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                }}
+              >
+                <div className="bg-black/70 backdrop-blur-sm p-8 h-full w-full">
+                  <div className="text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-yellow-400/50 transition-all duration-300">
+                      <div className="text-black">
+                        {member.icon}
+                      </div>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
+                    <div className="text-yellow-400 font-semibold text-lg mb-2">{member.role}</div>
+                    <div className="text-gray-400 text-sm mb-4">{member.year}</div>
+                    <p className="text-gray-300 text-sm leading-relaxed">{member.description}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -168,7 +161,7 @@ const CoreTeam = () => {
               Our <span className="text-yellow-400">Team</span> Stats
             </h2>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="text-center">
               <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">11</div>
