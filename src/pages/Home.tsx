@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Camera, Users, Calendar, Instagram, Linkedin, Facebook, TrendingUp } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Play, Camera, Users, Calendar, Instagram, Linkedin, Facebook, TrendingUp, Moon, Sun } from 'lucide-react';
 
 const Home = () => {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [darkMode, setDarkMode] = useState(true);
+
   const nextEventDate = new Date('2025-08-01T10:00:00');
 
   useEffect(() => {
@@ -22,6 +23,8 @@ const Home = () => {
     }, 1000);
     return () => clearInterval(timer);
   }, []);
+
+  const toggleTheme = () => setDarkMode(!darkMode);
 
   const featuredReels = [
     {
@@ -73,29 +76,25 @@ const Home = () => {
   ];
 
   return (
-    <div className="pt-16 min-h-screen bg-black text-white">
-      {/* Splash Screen */}
-      <div id="splash" className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black z-50">
-        <motion.div
-          initial={{ opacity: 1 }}
-          animate={{ opacity: 0 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="text-yellow-400 text-4xl font-bold"
-        >
-          Reel HausClub 🎬
-        </motion.div>
-      </div>
+    <div className={`${darkMode ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-500 min-h-screen pt-16`}>
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        className="fixed top-4 right-4 z-50 p-2 rounded-full border border-yellow-400 bg-black text-yellow-400 hover:bg-yellow-400 hover:text-black transition-all"
+        aria-label="Toggle Dark Mode"
+      >
+        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+      </button>
 
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
-        <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover opacity-10" src="/videos/hero-bg.mp4" />
         <div className="relative z-10 text-center mb-16 px-4">
-          <motion.h1 initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
+          <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
             Reel HausClub
-          </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-2xl md:text-3xl text-gray-300 max-w-3xl mx-auto">
+          </h1>
+          <p className="text-2xl md:text-3xl max-w-3xl mx-auto">
             Level up IARE's social media game through the art of <span className="text-yellow-400 font-semibold">photography, filmmaking, and reel making</span>
-          </motion.p>
+          </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <a href="/join" className="bg-yellow-400 text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform inline-flex items-center space-x-2 shadow-lg shadow-yellow-400/30">
               <Users size={20} />
@@ -110,28 +109,22 @@ const Home = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 bg-gray-900">
+      <section className="py-20 bg-opacity-10 backdrop-blur-sm border-t border-yellow-400/10">
         <div className="max-w-6xl mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12">What Our <span className="text-yellow-400">Members Say</span></h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-12">What Our <span className="text-yellow-400">Members Say</span></h2>
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.2 }}
-                className="bg-black/50 p-6 rounded-xl border border-yellow-400/20 text-left"
-              >
-                <p className="text-gray-300 italic">"{t.quote}"</p>
+              <div key={i} className="bg-black/10 dark:bg-white/10 p-6 rounded-xl border border-yellow-400/20 text-left">
+                <p className="italic">"{t.quote}"</p>
                 <p className="text-yellow-400 mt-4 font-bold">– {t.name}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 bg-black text-center text-gray-500 text-sm border-t border-yellow-400/20">
+      <footer className="py-8 text-center text-sm border-t border-yellow-400/10">
         <p>© {new Date().getFullYear()} Reel HausClub · Made with ❤️ at IARE</p>
       </footer>
     </div>
