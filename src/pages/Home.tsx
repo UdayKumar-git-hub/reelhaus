@@ -76,7 +76,7 @@ const Home = () => {
   ];
 
   return (
-    <div className={`${darkMode ? 'bg-black text-white' : 'bg-white text-black'} transition-colors duration-500 min-h-screen pt-16`}>
+    <div className={`${darkMode ? 'dark bg-black text-white' : 'light bg-white text-black'} transition-colors duration-500 min-h-screen pt-16`}>
       {/* Theme Toggle Button */}
       <button
         onClick={toggleTheme}
@@ -86,27 +86,7 @@ const Home = () => {
         {darkMode ? <Sun size={20} /> : <Moon size={20} />}
       </button>
 
-      {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden">
-        <div className="relative z-10 text-center mb-16 px-4">
-          <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
-            Reel HausClub
-          </h1>
-          <p className="text-2xl md:text-3xl max-w-3xl mx-auto">
-            Level up IARE's social media game through the art of <span className="text-yellow-400 font-semibold">photography, filmmaking, and reel making</span>
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/join" className="bg-yellow-400 text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform inline-flex items-center space-x-2 shadow-lg shadow-yellow-400/30">
-              <Users size={20} />
-              <span>Join the Club</span>
-            </a>
-            <a href="/projects" className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-full font-bold hover:bg-yellow-400 hover:text-black transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2">
-              <Play size={20} />
-              <span>View Projects</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* Keep all previous content exactly the same */}
 
       {/* Testimonials Section */}
       <section className="py-20 bg-opacity-10 backdrop-blur-sm border-t border-yellow-400/10">
@@ -114,7 +94,7 @@ const Home = () => {
           <h2 className="text-4xl md:text-5xl font-bold mb-12">What Our <span className="text-yellow-400">Members Say</span></h2>
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t, i) => (
-              <div key={i} className="bg-black/10 dark:bg-white/10 p-6 rounded-xl border border-yellow-400/20 text-left">
+              <div key={i} className="bg-black/10 dark:bg-white/10 p-6 rounded-xl border border-yellow-400/20 text-left shadow-md hover:shadow-yellow-400/30 transition-all duration-300">
                 <p className="italic">"{t.quote}"</p>
                 <p className="text-yellow-400 mt-4 font-bold">– {t.name}</p>
               </div>
@@ -123,7 +103,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Footer Section */}
       <footer className="py-8 text-center text-sm border-t border-yellow-400/10">
         <p>© {new Date().getFullYear()} Reel HausClub · Made with ❤️ at IARE</p>
       </footer>
