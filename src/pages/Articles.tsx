@@ -1,244 +1,134 @@
-import React from 'react';
-import { Calendar, User, ArrowRight, BookOpen, TrendingUp, Camera, Video } from 'lucide-react';
+import React, { useState } from 'react';
+import { PenSquare, Clock, User, ArrowRight, Rss, Search, Mic, BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Articles = () => {
-  const articles = [
-    {
-      id: 1,
-      title: "10 Essential Tips for Creating Viral Reels",
-      excerpt: "Learn the secrets behind viral content creation and how to make your reels stand out in a crowded social media landscape.",
-      author: "Nandana",
-      date: "February 5, 2024",
-      readTime: "5 min read",
-      category: "Content Creation",
-      image: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600",
-      icon: <Video className="w-5 h-5" />
-    },
-    {
-      id: 2,
-      title: "Photography 101: Mastering Campus Photography",
-      excerpt: "A comprehensive guide to capturing stunning photographs around campus, from golden hour shots to architectural details.",
-      author: "Uday",
-      date: "January 28, 2024",
-      readTime: "8 min read",
-      category: "Photography",
-      image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=600",
-      icon: <Camera className="w-5 h-5" />
-    },
-    {
-      id: 3,
-      title: "Social Media Marketing Strategies for Student Organizations",
-      excerpt: "Discover effective strategies to boost your club's social media presence and engage with your target audience.",
-      author: "Prathima",
-      date: "January 22, 2024",
-      readTime: "6 min read",
-      category: "Marketing",
-      image: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=600",
-      icon: <TrendingUp className="w-5 h-5" />
-    },
-    {
-      id: 4,
-      title: "The Art of Storytelling in Visual Content",
-      excerpt: "How to craft compelling narratives through your visual content and create emotional connections with your audience.",
-      author: "Devansh V Purohit",
-      date: "January 15, 2024",
-      readTime: "7 min read",
-      category: "Content Creation",
-      image: "https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=600",
-      icon: <BookOpen className="w-5 h-5" />
-    },
-    {
-      id: 5,
-      title: "Building Your Personal Brand as a Student Creator",
-      excerpt: "Essential steps to establish yourself as a content creator while balancing academic responsibilities.",
-      author: "Jayani",
-      date: "January 8, 2024",
-      readTime: "5 min read",
-      category: "Personal Branding",
-      image: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600",
-      icon: <User className="w-5 h-5" />
-    },
-    {
-      id: 6,
-      title: "Event Photography: Capturing the Perfect Moment",
-      excerpt: "Tips and techniques for photographing events, from preparation to post-processing your shots.",
-      author: "Charan",
-      date: "December 30, 2023",
-      readTime: "9 min read",
-      category: "Photography",
-      image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=600",
-      icon: <Camera className="w-5 h-5" />
-    }
+  const [activeFilter, setActiveFilter] = useState('all');
+  const articles = []; // No articles yet
+
+  const filters = [
+    { id: 'all', label: 'All Articles', icon: <Rss/> },
+    { id: 'interviews', label: 'Interviews', icon: <Mic/> },
+    { id: 'case-studies', label: 'Case Studies', icon: <BookOpen/> },
   ];
 
-  const categories = [
-    { name: "All", count: 6, active: true },
-    { name: "Content Creation", count: 2, active: false },
-    { name: "Photography", count: 2, active: false },
-    { name: "Marketing", count: 1, active: false },
-    { name: "Personal Branding", count: 1, active: false }
+  const placeholderArticles = [
+    { id: 2, title: "An Interview with a Professional Cinematographer", category: "Interviews", image: "https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=800", author: "Levi", date: "Coming Soon" },
+    { id: 3, title: "Case Study: Boosting an Event's Social Reach by 500%", category: "Case Studies", image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800", author: "Akshitha", date: "Coming Soon" },
+    { id: 1, title: "Exploring the Art of Visual Storytelling", category: "Insights", image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=800", author: "Nandana", date: "Coming Soon" },
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0, scale: 0.95 },
+    visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  };
 
   return (
-    <div className="pt-16 min-h-screen bg-black">
+    <div className="min-h-screen bg-black text-gray-200 font-sans">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
-              Articles
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Insights, tips, and guides on content creation, photography, and digital marketing from our team
-            </p>
-          </div>
+      <section className="relative py-28 pt-40 bg-gradient-to-b from-black via-gray-900 to-black overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20 animate-pulse">
+          <div className="absolute h-full w-full bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <motion.h1 
+            className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_30px_rgba(234,179,8,0.6)]"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
+          >
+            Articles
+          </motion.h1>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Insights, tutorials, and stories from the creative minds at Reel HausClub.
+          </motion.p>
         </div>
       </section>
 
-      {/* Categories Filter */}
-      <section className="py-12 bg-gray-900">
+      {/* Articles Section */}
+      <section className="py-24 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category) => (
-              <button
-                key={category.name}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                  category.active
-                    ? 'bg-gradient-to-r from-yellow-400 to-yellow-500 text-black shadow-lg shadow-yellow-400/50'
-                    : 'bg-black/50 text-gray-300 border border-yellow-400/20 hover:border-yellow-400/50 hover:text-yellow-400'
-                }`}
-              >
-                {category.name} ({category.count})
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Articles Grid */}
-      <section className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {articles.map((article) => (
-              <article key={article.id} className="bg-gray-900/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl overflow-hidden hover:border-yellow-400/50 transition-all duration-300 group">
-                <div className="aspect-w-16 aspect-h-9 relative">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <div className="bg-yellow-400 text-black px-3 py-1 rounded-full text-sm font-semibold flex items-center space-x-1">
-                      {article.icon}
-                      <span>{article.category}</span>
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h2 className="text-xl font-bold text-white mb-3 line-clamp-2 group-hover:text-yellow-400 transition-colors">
-                    {article.title}
-                  </h2>
-                  
-                  <p className="text-gray-300 mb-4 line-clamp-3">
-                    {article.excerpt}
-                  </p>
-                  
-                  <div className="flex items-center justify-between text-gray-400 text-sm mb-4">
-                    <div className="flex items-center space-x-4">
-                      <div className="flex items-center space-x-1">
-                        <User size={16} />
-                        <span>{article.author}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Calendar size={16} />
-                        <span>{article.date}</span>
-                      </div>
-                    </div>
-                    <span className="text-yellow-400">{article.readTime}</span>
-                  </div>
-                  
-                  <button className="w-full bg-gradient-to-r from-yellow-400/10 to-yellow-500/10 border border-yellow-400/20 text-yellow-400 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-500 hover:text-black transition-all duration-300 flex items-center justify-center space-x-2 group">
-                    <span>Read Article</span>
-                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+          <div className="flex justify-center mb-12">
+              <div className="relative flex flex-wrap gap-2 p-1 bg-black/30 rounded-full">
+                {filters.map((filter) => (
+                  <button
+                    key={filter.id}
+                    onClick={() => setActiveFilter(filter.id)}
+                    className={`relative px-6 py-3 rounded-full font-semibold text-sm transition-colors duration-300 z-10 flex items-center gap-2 ${activeFilter === filter.id ? 'text-black' : 'text-gray-300 hover:text-white'}`}
+                  >
+                    {filter.icon} {filter.label}
+                    {activeFilter === filter.id && (
+                      <motion.div
+                          className="absolute inset-0 bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-full z-[-1]"
+                          layoutId="activeArticleFilter"
+                          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                      />
+                    )}
                   </button>
-                </div>
-              </article>
-            ))}
+                ))}
+              </div>
           </div>
-        </div>
-      </section>
 
-      {/* Featured Article */}
-      <section className="py-20 bg-gradient-to-br from-yellow-400 to-yellow-500">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
-              Featured Article
-            </h2>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-black/10 backdrop-blur-sm rounded-2xl p-8 md:p-12">
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center space-x-2 bg-black/20 text-black px-4 py-2 rounded-full font-semibold mb-4">
-                  <TrendingUp size={20} />
-                  <span>Trending</span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-black mb-4">
-                  The Future of Student Content Creation
-                </h3>
-                <p className="text-xl text-black/80 mb-6">
-                  Exploring emerging trends and technologies that will shape how students create and share content in the digital age.
+          {articles.length > 0 ? (
+            <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" animate="visible">
+              {/* Actual articles will be mapped here */}
+            </motion.div>
+          ) : (
+            <div className="text-center py-16">
+              <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}>
+                <PenSquare className="w-16 h-16 text-yellow-400/50 mx-auto mb-6" />
+                <h3 className="text-3xl font-bold text-white mb-4">Stories in the Making</h3>
+                <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-12">
+                  Our new Articles section is currently under development. We're busy writing insightful interviews and in-depth case studies. Stay tuned!
                 </p>
-                <div className="flex items-center justify-center space-x-6 text-black/80 mb-8">
-                  <div className="flex items-center space-x-1">
-                    <User size={16} />
-                    <span>Reel HausClub Team</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Calendar size={16} />
-                    <span>February 10, 2024</span>
-                  </div>
-                  <span>12 min read</span>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <button className="bg-black text-yellow-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-900 transition-colors transform hover:scale-105 inline-flex items-center space-x-2">
-                  <BookOpen size={20} />
-                  <span>Read Full Article</span>
-                </button>
-              </div>
+              </motion.div>
+              <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                {placeholderArticles.map(article => (
+                  <motion.div key={article.id} className="group bg-gray-900/50 rounded-2xl border border-yellow-400/10 overflow-hidden" variants={itemVariants}>
+                    <div className="relative aspect-video overflow-hidden">
+                      <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-black/50"></div>
+                    </div>
+                    <div className="p-6">
+                      <p className="text-yellow-400 text-sm font-semibold mb-2">{article.category}</p>
+                      <h4 className="text-xl font-bold text-white mb-4 h-16">{article.title}</h4>
+                      <div className="flex justify-between items-center text-gray-400 text-sm">
+                        <span className="flex items-center gap-2"><User size={14}/> {article.author}</span>
+                        <span className="flex items-center gap-2"><Clock size={14}/> {article.date}</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
-      {/* Newsletter Signup */}
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Stay Updated
-            </h2>
-            <p className="text-xl text-gray-300 mb-8">
-              Subscribe to our newsletter for the latest articles, tips, and insights on content creation.
-            </p>
-            
-            <div className="max-w-md mx-auto">
-              <div className="flex">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 px-6 py-4 bg-black/50 border border-yellow-400/20 rounded-l-full text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400/50"
-                />
-                <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 rounded-r-full font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300">
-                  Subscribe
-                </button>
-              </div>
-            </div>
-          </div>
+      {/* Call to Action - Write for us */}
+      <section className="py-24 bg-black">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Have a Story to Tell?</h2>
+                <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    We believe in the power of shared knowledge. If you have an idea for an article, an interview, or an inspiring story, we'd love to hear from you.
+                </p>
+                <motion.a 
+                    href="/contact"
+                    className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" 
+                    whileHover={{ y: -3 }} 
+                    whileTap={{ y: 1 }}
+                >
+                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-40 group-hover:h-40"></span>
+                    <span className="relative flex items-center">Write For Us <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-2" /></span>
+                </motion.a>
+            </motion.div>
         </div>
       </section>
     </div>
