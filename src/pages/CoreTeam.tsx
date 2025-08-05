@@ -126,7 +126,14 @@ const CoreTeam = () => {
                 <p className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
                     We're always looking for passionate students to make a difference in IARE's digital landscape.
                 </p>
-                <motion.a href="/join" className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
+                <motion.a 
+                    href="https://wa.me/917989531544" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" 
+                    whileHover={{ y: -3 }} 
+                    whileTap={{ y: 1 }}
+                >
                     <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-40 group-hover:h-40"></span>
                     <span className="relative flex items-center">Join The Movement <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-2" /></span>
                 </motion.a>
