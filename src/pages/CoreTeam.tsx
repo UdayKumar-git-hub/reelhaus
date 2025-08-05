@@ -8,7 +8,7 @@ const CoreTeam = () => {
       name: "Nandana",
       year: "2nd Yr CSE",
       icon: <Crown className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Leading the club's vision and strategic direction"
     },
     {
@@ -16,6 +16,7 @@ const CoreTeam = () => {
       name: "Pallapati Levi",
       year: "1st Yr IT",
       icon: <Shield className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Supporting operations and team coordination"
     },
     {
@@ -23,6 +24,7 @@ const CoreTeam = () => {
       name: "P.Sai Jaswanth",
       year: "1st Yr IT",
       icon: <Shield className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Supporting operations and team coordination"
     },
     {
@@ -30,6 +32,7 @@ const CoreTeam = () => {
       name: "L.UdayKumar",
       year: "1st Yr",
       icon: <Settings className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Overseeing visual design and creative direction"
     },
     {
@@ -37,6 +40,7 @@ const CoreTeam = () => {
       name: "Tharun",
       year: "1st Yr",
       icon: <Settings className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Overseeing visual design and creative direction"
     },
     {
@@ -44,13 +48,15 @@ const CoreTeam = () => {
       name: "Yeshwanth Reddy",
       year: "1st Year Mech",
       icon: <Settings className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Managing technical infrastructure and development"
     },
     {
       role: "CP/PR Head",
-      name: "Akshitha ",
+      name: "Akshitha",
       year: "1st Yr Mech",
       icon: <Megaphone className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Handling corporate partnerships and public relations"
     },
     {
@@ -58,6 +64,7 @@ const CoreTeam = () => {
       name: "Akil B",
       year: "1st Yr MECH",
       icon: <Shield className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Supporting various club activities and initiatives"
     },
     {
@@ -65,6 +72,7 @@ const CoreTeam = () => {
       name: "Aasrith",
       year: "1st Yr CSM",
       icon: <Calendar className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Organizing workshops, competitions, and events"
     },
     {
@@ -72,6 +80,7 @@ const CoreTeam = () => {
       name: "Brahmini",
       year: "1st Yr ECE",
       icon: <Shield className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Supporting various club activities and initiatives"
     },
     {
@@ -79,6 +88,7 @@ const CoreTeam = () => {
       name: "Jayani",
       year: "1st Yr CSE",
       icon: <Share2 className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Managing social media presence and content strategy"
     },
     {
@@ -86,6 +96,7 @@ const CoreTeam = () => {
       name: "Sankeerthana",
       year: "1st Yr CSE",
       icon: <Share2 className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Managing social media presence and content strategy"
     },
     {
@@ -93,6 +104,7 @@ const CoreTeam = () => {
       name: "Charan",
       year: "1st Yr ECE",
       icon: <Truck className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Coordinating logistics and media production"
     },
     {
@@ -100,6 +112,7 @@ const CoreTeam = () => {
       name: "Snehas",
       year: "1st Yr Aero",
       icon: <Truck className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
       description: "Cuts and Cooks"
     }
   ];
@@ -108,15 +121,13 @@ const CoreTeam = () => {
     <div className="pt-16 min-h-screen bg-black">
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
-              Core Team
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Meet the passionate leaders driving Reel HausClub's mission to transform IARE's digital presence
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
+          <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
+            Core Team
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Meet the passionate leaders driving Reel HausClub's mission to transform IARE's digital presence
+          </p>
         </div>
       </section>
 
@@ -129,7 +140,7 @@ const CoreTeam = () => {
                 key={index}
                 className="relative rounded-2xl overflow-hidden border border-yellow-400/20 hover:border-yellow-400/50 transition-all duration-300 group hover:scale-105"
                 style={{
-                  backgroundImage: `url(${member.image || 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400'})`,
+                  backgroundImage: `url(${member.image})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
@@ -153,37 +164,7 @@ const CoreTeam = () => {
         </div>
       </section>
 
-      {/* Team Stats */}
-      <section className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Our <span className="text-yellow-400">Team</span> Stats
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">11</div>
-              <div className="text-gray-300 font-semibold">Core Members</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">6</div>
-              <div className="text-gray-300 font-semibold">Departments</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">4</div>
-              <div className="text-gray-300 font-semibold">Branches</div>
-            </div>
-            <div className="text-center">
-              <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">2024</div>
-              <div className="text-gray-300 font-semibold">Founded</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Call to Action */}
+      {/* Footer/CTA */}
       <section className="py-20 bg-gradient-to-br from-yellow-400 to-yellow-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
