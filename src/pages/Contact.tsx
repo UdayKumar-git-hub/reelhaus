@@ -15,7 +15,7 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log('Form submitted:', formData);
+    console.log('Form submitted (to be sent to Instagram DM):', formData);
     // Simulate API call
     setTimeout(() => {
       setIsSubmitting(false);
@@ -26,15 +26,12 @@ const Contact = () => {
 
   const contactInfo = [
     { icon: <Mail className="w-8 h-8" />, title: "Email", content: "reelhausclub@iare.ac.in", description: "For queries & collaborations" },
-    { icon: <Phone className="w-8 h-8" />, title: "Phone", content: "Contact Student Council", description: "For general inquiries" },
-    { icon: <MapPin className="w-8 h-8" />, title: "Location", content: "IARE Campus, Dundigal", description: "Hyderabad - 500043" },
-    { icon: <Clock className="w-8 h-8" />, title: "Office Hours", content: "Mon - Fri: 9 AM - 5 PM", description: "During college hours" }
+    { icon: <Phone className="w-8 h-8" />, title: "WhatsApp", content: "+91 79895 31544", description: "Message us for inquiries" },
+    { icon: <MapPin className="w-8 h-8" />, title: "Location", content: "IARE Campus, Dundigal", description: "Hyderabad - 500043" }
   ];
 
   const socialLinks = [
-    { icon: <Instagram />, name: "Instagram", handle: "@reelhausclub", url: "https://instagram.com/reelhausclub", color: "from-pink-500 to-orange-400", shadow: "shadow-pink-500/30" },
-    { icon: <Linkedin />, name: "LinkedIn", handle: "Reel HausClub", url: "https://linkedin.com/company/reelhausclub", color: "from-blue-600 to-blue-400", shadow: "shadow-blue-500/30" },
-    { icon: <Facebook />, name: "Facebook", handle: "reelhausclub", url: "https://facebook.com/reelhausclub", color: "from-blue-700 to-sky-500", shadow: "shadow-sky-500/30" }
+    { icon: <Instagram />, name: "Instagram", handle: "@reelhausclub", url: "https://instagram.com/reelhausclub", color: "from-pink-500 to-orange-400", shadow: "shadow-pink-500/30" }
   ];
 
   const containerVariants = {
@@ -69,7 +66,7 @@ const Contact = () => {
               <CheckCircle className="w-16 h-16 text-green-400" />
             </div>
             <h2 className="text-2xl font-bold text-white mb-3">Message Sent!</h2>
-            <p className="text-gray-300 mb-6">Thanks for reaching out. We'll get back to you as soon as possible.</p>
+            <p className="text-gray-300 mb-6">Your message has been sent to our Instagram DMs. We'll get back to you soon!</p>
             <button
               onClick={() => setShowSuccessModal(false)}
               className="bg-yellow-400 text-black px-6 py-2 rounded-full font-bold hover:bg-yellow-500 transition-colors"
@@ -109,7 +106,7 @@ const Contact = () => {
       {/* Contact Info Grid */}
       <section className="py-24 bg-gray-900/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             {contactInfo.map((info, index) => (
               <motion.div key={index} className="bg-black/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl p-8 text-center transition-all duration-300 hover:border-yellow-400/50 hover:shadow-[0_0_25px_rgba(234,179,8,0.3)] hover:-translate-y-2 group" variants={itemVariants}>
                 <div className="text-yellow-400 mb-4 transition-transform duration-300 group-hover:scale-110 flex justify-center">{info.icon}</div>
@@ -167,7 +164,7 @@ const Contact = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Follow Our <span className="text-yellow-400">Journey</span></h2>
             <p className="text-xl text-gray-400 max-w-2xl mx-auto">Stay connected for the latest updates, events, and creative content.</p>
           </motion.div>
-          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+          <motion.div className="grid grid-cols-1 md:max-w-sm mx-auto gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             {socialLinks.map((social) => (
               <motion.a key={social.name} href={social.url} target="_blank" rel="noopener noreferrer" className={`relative p-8 rounded-2xl overflow-hidden text-white transition-all duration-300 group hover:shadow-2xl ${social.shadow}`} variants={itemVariants} whileHover={{ y: -8 }}>
                 <div className={`absolute inset-0 bg-gradient-to-br ${social.color} opacity-80 group-hover:opacity-100 transition-opacity duration-300`}></div>
