@@ -8,7 +8,7 @@ const CoreTeam = () => {
       name: "Nandana",
       year: "2nd Yr CSE",
       icon: <Crown className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/wTTk8k69/presiden.jpg",
       description: "Leading the club's vision and strategic direction"
     },
     {
@@ -16,7 +16,7 @@ const CoreTeam = () => {
       name: "Pallapati Levi",
       year: "1st Yr IT",
       icon: <Shield className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/7hqnL30M/vice.jpg",
       description: "Supporting operations and team coordination"
     },
     {
@@ -24,7 +24,7 @@ const CoreTeam = () => {
       name: "P.Sai Jaswanth",
       year: "1st Yr IT",
       icon: <Shield className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/h4005YRC/jas.jpg",
       description: "Supporting operations and team coordination"
     },
     {
@@ -32,7 +32,7 @@ const CoreTeam = () => {
       name: "L.UdayKumar",
       year: "1st Yr",
       icon: <Settings className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/RZWQqV68/design-head-post.jpg",
       description: "Overseeing visual design and creative direction"
     },
     {
