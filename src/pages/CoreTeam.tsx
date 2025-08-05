@@ -40,7 +40,7 @@ const CoreTeam = () => {
       name: "Tharun",
       year: "1st Yr",
       icon: <Settings className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/9MdBV8RQ/tharun.jpg",
       description: "Overseeing visual design and creative direction"
     },
     {
@@ -48,7 +48,7 @@ const CoreTeam = () => {
       name: "Yeshwanth Reddy",
       year: "1st Year Mech",
       icon: <Settings className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/d3nmZh9M/yesh.jpg",
       description: "Managing technical infrastructure and development"
     },
     {
@@ -72,7 +72,7 @@ const CoreTeam = () => {
       name: "Aasrith",
       year: "1st Yr CSM",
       icon: <Calendar className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/PxsMgsq7/ashrith.jpg",
       description: "Organizing workshops, competitions, and events"
     },
     {
@@ -88,7 +88,7 @@ const CoreTeam = () => {
       name: "Jayani",
       year: "1st Yr CSE",
       icon: <Share2 className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/YSm3Dqtg/jayni.jpg",
       description: "Managing social media presence and content strategy"
     },
     {
@@ -96,7 +96,7 @@ const CoreTeam = () => {
       name: "Sankeerthana",
       year: "1st Yr CSE",
       icon: <Share2 className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/rFnN8tmx/sankeerthana-manager.jpg",
       description: "Managing social media presence and content strategy"
     },
     {
@@ -112,7 +112,7 @@ const CoreTeam = () => {
       name: "Snehas",
       year: "1st Yr Aero",
       icon: <Truck className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/4x0P1hRs/snehas.jpg",
       description: "Cuts and Cooks"
     }
   ];
