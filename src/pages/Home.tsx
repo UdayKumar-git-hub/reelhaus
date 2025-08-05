@@ -157,11 +157,11 @@ const App = () => {
                 <div className="max-w-7xl mx-auto px-4">
                     <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
                         <h2 className="text-4xl md:text-5xl font-black mb-4">Next Big Event</h2>
-                        <p className="text-2xl font-light">Photography Workshop & Reel Making Competition</p>
+                        
                     </motion.div>
                     <AnimatePresence>
                         {timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0 ? (
-                            <motion.p key="event-ended" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-2xl text-center font-bold">The event has started!</motion.p>
+                            <motion.p key="event-ended" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-2xl text-center font-bold">To Be Announced Soon</motion.p>
                         ) : (
                             <motion.div key="countdown" className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
                                 {Object.entries(timeLeft).map(([unit, value]) => (
