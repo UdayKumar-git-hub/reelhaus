@@ -64,7 +64,7 @@ const CoreTeam = () => {
       name: "Akil B",
       year: "1st Yr MECH",
       icon: <Shield className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400",
+      image: "https://i.postimg.cc/8Pttj0yF/akhil.jpg",
       description: "Supporting various club activities and initiatives"
     },
     {
