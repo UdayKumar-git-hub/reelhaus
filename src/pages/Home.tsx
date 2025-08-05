@@ -37,15 +37,15 @@ const useCountdown = (targetDate) => {
 
 const App = () => {
     const [isDarkMode, setIsDarkMode] = React.useState(true);
-    const nextEventDate = '2025-09-15T18:00:00';
+    const nextEventDate = '2025-08-01T10:00:00';
     const timeLeft = useCountdown(nextEventDate);
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
     const featuredReels = [
-        { id: 1, title: "Beyond the Edge IARE", thumbnail: "https://placehold.co/600x800/000000/FFFFFF?text=Reel+1", views: "4.8K", likes: "320", link: "https://www.instagram.com/reel/C3pOwJqSAD_/" },
-        { id: 2, title: "When Your Friend Bunks Class", thumbnail: "https://placehold.co/600x800/111111/FFFFFF?text=Reel+2", views: "7.2K", likes: "550", link: "https://www.instagram.com/reel/C3pOwJqSAD_/" },
-        { id: 3, title: "Attendance Frustration", thumbnail: "https://placehold.co/600x800/222222/FFFFFF?text=Reel+3", views: "3.1K", likes: "210", link: "https://www.instagram.com/reel/C3pOwJqSAD_/" },
+        { id: 1, title: "Beyond the edge IARE", thumbnail: "https://i.postimg.cc/xjz3fJhn/Screenshot-2025-07-17-132834.jpg", views: "4.8K", likes: "320", link: "https://www.instagram.com/reel/DK4hZxrvUG7/" },
+        { id: 2, title: "When Your Friend Bunks Class", thumbnail: "https://i.postimg.cc/XYGC8TW3/Screenshot-2025-07-17-133855.jpg", views: "7.2K", likes: "550", link: "https://www.instagram.com/reel/DLKbMn4PV6H/" },
+        { id: 3, title: "Attendance Frustration", thumbnail: "https://i.postimg.cc/dtnbBxBW/Screenshot-2025-07-17-134243.jpg", views: "3.1K", likes: "210", link: "https://www.instagram.com/reel/DLZ7TsKP-xe/" },
     ];
 
     const stats = [
@@ -204,7 +204,7 @@ const App = () => {
                         <p className={`text-xl mb-10 max-w-2xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                             Join Reel HausClub to build your portfolio, master new skills, and shape IARE's digital narrative.
                         </p>
-                        <motion.a href="#" className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-lg shadow-yellow-400/30" whileHover={{ y: -2 }} whileTap={{ y: 1 }}>
+                        <motion.a href="#join" className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-lg shadow-yellow-400/30" whileHover={{ y: -2 }} whileTap={{ y: 1 }}>
                             <span className="absolute inset-0 bg-gradient-to-r from-yellow-500 to-yellow-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                             <span className="z-10">Apply Now</span>
                             <ArrowRight className="w-6 h-6 ml-3 z-10 transition-transform duration-300 group-hover:translate-x-1" />
@@ -217,11 +217,15 @@ const App = () => {
             <footer className={`py-12 border-t ${isDarkMode ? 'bg-gray-900/50 border-yellow-400/10' : 'bg-gray-200 border-gray-300/50'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="flex justify-center space-x-8 mb-6">
-                        {[Instagram, Linkedin, Facebook].map((Icon, index) => (
-                            <motion.a key={index} href="#" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}>
-                                <Icon size={28} />
-                            </motion.a>
-                        ))}
+                        <motion.a href="https://instagram.com/reelhausclub" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}>
+                            <Instagram size={28} />
+                        </motion.a>
+                        <motion.a href="https://linkedin.com/company/reelhausclub" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}>
+                            <Linkedin size={28} />
+                        </motion.a>
+                        <motion.a href="https://facebook.com/reelhausclub" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}>
+                            <Facebook size={28} />
+                        </motion.a>
                     </div>
                     <p className={`text-sm ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>
                         &copy; {new Date().getFullYear()} Reel HausClub. All Rights Reserved.
