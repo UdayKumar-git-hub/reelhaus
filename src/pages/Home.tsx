@@ -7,6 +7,7 @@ const useCountdown = (targetDate) => {
     const [timeLeft, setTimeLeft] = React.useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
     React.useEffect(() => {
+        if (!targetDate) return;
         const timer = setInterval(() => {
             const distance = new Date(targetDate).getTime() - new Date().getTime();
             if (distance > 0) {
@@ -52,7 +53,8 @@ const CountUp = ({ end, suffix = '' }) => {
 
 const App = () => {
     const [isDarkMode, setIsDarkMode] = React.useState(true);
-    const nextEventDate = '2025-08-01T10:00:00';
+    // Setting a future date for demonstration, or it can be null
+    const nextEventDate = null; //'2025-09-15T18:00:00';
     const timeLeft = useCountdown(nextEventDate);
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
@@ -82,8 +84,8 @@ const App = () => {
 
     return (
         <div className={`font-sans transition-colors duration-500 ${isDarkMode ? 'bg-black text-gray-200' : 'bg-gray-50 text-gray-800'}`}>
-            <motion.button onClick={toggleDarkMode} className="fixed top-5 right-5 p-3 rounded-full bg-gray-800/50 backdrop-blur-sm text-yellow-400 z-50 transition-all duration-300 hover:bg-gray-700 hover:scale-110" aria-label="Toggle dark mode" whileHover={{ rotate: 360 }} transition={{ duration: 0.7 }}>
-                {isDarkMode ? '☀️' : '�'}
+            <motion.button onClick={toggleDarkMode} className="fixed top-5 left-5 p-3 rounded-full bg-gray-800/50 backdrop-blur-sm text-yellow-400 z-50 transition-all duration-300 hover:bg-gray-700 hover:scale-110" aria-label="Toggle dark mode" whileHover={{ rotate: 360 }} transition={{ duration: 0.7 }}>
+                {isDarkMode ? '☀️' : '🌙'}
             </motion.button>
 
             <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -100,11 +102,19 @@ const App = () => {
                             Elevating IARE's social presence through the lens of <span className="text-yellow-400 font-semibold">photography, filmmaking, and viral reel creation</span>.
                         </motion.p>
                         <motion.div className="flex flex-col sm:flex-row gap-6 justify-center" variants={itemVariants}>
-                            <motion.a href="#join" className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(234,179,8,0.5)] hover:shadow-[0_0_35px_rgba(234,179,8,0.7)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
+                            <motion.a 
+                                href="https://wa.me/917989531544" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(234,179,8,0.5)] hover:shadow-[0_0_35px_rgba(234,179,8,0.7)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
                                 <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-32 group-hover:h-32"></span>
                                 <span className="relative flex items-center"><Users className="w-6 h-6 mr-3" /> Join the Movement</span>
                             </motion.a>
-                            <motion.a href="#projects" className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-yellow-400 bg-transparent border-2 border-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 hover:bg-yellow-400/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
+                            <motion.a 
+                                href="https://instagram.com/reelhaus.iare" 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-yellow-400 bg-transparent border-2 border-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 hover:bg-yellow-400/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
                                 <Play className="w-6 h-6 mr-3" />
                                 <span>View Our Work</span>
                             </motion.a>
@@ -157,10 +167,9 @@ const App = () => {
                 <div className="relative max-w-7xl mx-auto px-4">
                     <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
                         <h2 className="text-4xl md:text-5xl font-black mb-4 drop-shadow-lg">Next Big Event</h2>
-          
                     </motion.div>
                     <AnimatePresence>
-                        {timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0 ? (
+                        {(!nextEventDate || (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0)) ? (
                             <motion.p key="event-ended" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-2xl text-center font-bold">To be Announced!</motion.p>
                         ) : (
                             <motion.div key="countdown" className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
@@ -202,7 +211,11 @@ const App = () => {
                         <p className={`text-xl mb-10 max-w-2xl mx-auto ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
                             Join Reel HausClub to build your portfolio, master new skills, and shape IARE's digital narrative.
                         </p>
-                        <motion.a href="#join" className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
+                        <motion.a 
+                            href="https://wa.me/917989531544"
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
                             <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-40 group-hover:h-40"></span>
                             <span className="relative flex items-center">Apply Now <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-2" /></span>
                         </motion.a>
@@ -213,7 +226,7 @@ const App = () => {
             <footer className={`py-12 border-t-2 ${isDarkMode ? 'bg-gray-900/50 border-yellow-400/10' : 'bg-gray-100 border-gray-300/50'}`}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <div className="flex justify-center space-x-8 mb-6">
-                        <motion.a href="https://instagram.com/reelhausclub" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}><Instagram size={28} /></motion.a>
+                        <motion.a href="https://instagram.com/reelhaus.iare" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}><Instagram size={28} /></motion.a>
                         <motion.a href="https://linkedin.com/company/reelhausclub" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}><Linkedin size={28} /></motion.a>
                         <motion.a href="https://facebook.com/reelhausclub" target="_blank" rel="noopener noreferrer" className={`hover:text-yellow-400 transition-colors ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`} whileHover={{ scale: 1.2, y: -5 }}><Facebook size={28} /></motion.a>
                     </div>
