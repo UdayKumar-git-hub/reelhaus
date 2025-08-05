@@ -1,4 +1,4 @@
-import React, from 'react';
+import React from 'react';
 import { Play, Camera, Users, Calendar, Instagram, Linkedin, Facebook, TrendingUp, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
