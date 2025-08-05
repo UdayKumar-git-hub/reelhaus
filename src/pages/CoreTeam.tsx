@@ -8,7 +8,6 @@ const CoreTeam = () => {
       name: "Nandana",
       year: "2nd Yr CSE",
       icon: <Crown className="w-6 h-6" />,
-      image: "https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400"
       description: "Leading the club's vision and strategic direction"
     },
     {
@@ -125,13 +124,30 @@ const CoreTeam = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
-              <div key={index} className="bg-black/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl p-8 hover:border-yellow-400/50 transition-all duration-300 group hover:transform hover:scale-105">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-yellow-400/50 transition-all duration-300">
-                    <div className="text-black">
-                      {member.icon}
-                    </div>
-                  </div>
+              <div
+  key={index}
+  className="relative rounded-2xl overflow-hidden border border-yellow-400/20 hover:border-yellow-400/50 transition-all duration-300 group hover:scale-105"
+  style={{
+    backgroundImage: `url(${member.image || 'https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=400'})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }}
+>
+  <div className="bg-black/70 backdrop-blur-sm p-8 h-full w-full">
+    <div className="text-center">
+      <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:shadow-lg group-hover:shadow-yellow-400/50 transition-all duration-300">
+        <div className="text-black">
+          {member.icon}
+        </div>
+      </div>
+      <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
+      <div className="text-yellow-400 font-semibold text-lg mb-2">{member.role}</div>
+      <div className="text-gray-400 text-sm mb-4">{member.year}</div>
+      <p className="text-gray-300 text-sm leading-relaxed">{member.description}</p>
+    </div>
+  </div>
+</div>
+
                   
                   <h3 className="text-2xl font-bold text-white mb-2">{member.name}</h3>
                   <div className="text-yellow-400 font-semibold text-lg mb-2">{member.role}</div>
