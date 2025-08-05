@@ -1,274 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Users, MapPin, Clock, ArrowRight, Camera, Video, Trophy } from 'lucide-react';
+import React from 'react';
+import { Calendar, Users, ArrowRight, Instagram, Sparkles } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Events = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0
-  });
-
-  const nextEventDate = new Date('2024-02-15T10:00:00');
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      const now = new Date().getTime();
-      const distance = nextEventDate.getTime() - now;
-
-      if (distance > 0) {
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        setTimeLeft({ days, hours, minutes, seconds });
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Photography Workshop & Reel Making Competition",
-      date: "February 15, 2024",
-      time: "10:00 AM - 4:00 PM",
-      location: "IARE Main Campus",
-      participants: 150,
-      type: "Workshop + Competition",
-      description: "Learn advanced photography techniques and compete in our reel making contest with amazing prizes.",
-      image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=400",
-      icon: <Camera className="w-6 h-6" />
-    },
-    {
-      id: 2,
-      title: "Social Media Marketing Masterclass",
-      date: "March 2, 2024",
-      time: "2:00 PM - 5:00 PM",
-      location: "IARE Auditorium",
-      participants: 200,
-      type: "Masterclass",
-      description: "Industry experts will share insights on building engaging social media strategies for brands.",
-      image: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=400",
-      icon: <Video className="w-6 h-6" />
-    },
-    {
-      id: 3,
-      title: "Content Creation Bootcamp",
-      date: "March 20, 2024",
-      time: "9:00 AM - 6:00 PM",
-      location: "IARE Tech Hub",
-      participants: 100,
-      type: "Bootcamp",
-      description: "Intensive hands-on training in content creation, editing, and digital storytelling.",
-      image: "https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400",
-      icon: <Trophy className="w-6 h-6" />
-    }
-  ];
-
   const pastEvents = [
-    {
-      id: 1,
-      title: "Club Launch Event",
-      date: "January 10, 2024",
-      participants: 300,
-      highlights: ["Club introduction", "Team unveiling", "Future roadmap presentation"],
-      image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=400"
-    },
-    {
-      id: 2,
-      title: "First Photography Walk",
-      date: "January 25, 2024",
-      participants: 80,
-      highlights: ["Campus photography", "Basic techniques", "Portfolio building"],
-      image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=400"
-    }
+    { id: 1, title: "Club Launch Event", date: "January 10, 2024", participants: 300, image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800" },
+    { id: 2, title: "First Photography Walk", date: "January 25, 2024", participants: 80, image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=800" }
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+  };
+
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0, scale: 0.95 },
+    visible: { y: 0, opacity: 1, scale: 1, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } },
+  };
 
   return (
-    <div className="pt-16 min-h-screen bg-black">
+    <div className="min-h-screen bg-black text-gray-200 font-sans">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-black via-gray-900 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-500 mb-6">
-              Events
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Join our workshops, competitions, and masterclasses to enhance your creative skills
+      <section className="relative py-28 pt-40 bg-gradient-to-b from-black via-gray-900 to-black overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-20 animate-pulse">
+          <div className="absolute h-full w-full bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:20px_20px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <motion.h1 
+            className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_30px_rgba(234,179,8,0.6)]"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
+          >
+            Events
+          </motion.h1>
+          <motion.p 
+            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            Join our workshops, competitions, and masterclasses to ignite your creative spark.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Coming Soon Section */}
+      <section className="py-24 bg-gray-900/50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+            <Sparkles className="w-16 h-16 text-yellow-400 mx-auto mb-6" />
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">The Stage is Being Set...</h2>
+            <p className="text-xl text-gray-300 leading-relaxed mb-8">
+              Our team is currently curating an unforgettable calendar of events. From exclusive workshops with industry pros to high-stakes creative competitions, our next season is something you won't want to miss.
             </p>
-          </div>
+            <p className="font-semibold text-yellow-400 text-lg">It will be worth the wait. Check back soon!</p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Next Event Countdown */}
-      <section className="py-20 bg-gradient-to-br from-yellow-400 to-yellow-500">
+      {/* Past Events Showcase */}
+      <section className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-8">
-              Next Event
-            </h2>
-            <h3 className="text-2xl text-black/80 mb-8">Photography Workshop & Reel Making Competition</h3>
-          </div>
-
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-              {[
-                { label: 'Days', value: timeLeft.days },
-                { label: 'Hours', value: timeLeft.hours },
-                { label: 'Minutes', value: timeLeft.minutes },
-                { label: 'Seconds', value: timeLeft.seconds }
-              ].map((item) => (
-                <div key={item.label} className="text-center">
-                  <div className="bg-black text-yellow-400 rounded-2xl p-6 mb-2">
-                    <div className="text-3xl md:text-4xl font-bold">{item.value}</div>
-                  </div>
-                  <div className="text-black font-semibold">{item.label}</div>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center">
-              <button className="bg-black text-yellow-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-gray-900 transition-colors transform hover:scale-105 inline-flex items-center space-x-2">
-                <Calendar size={20} />
-                <span>Register Now</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Events */}
-      <section className="py-20 bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Upcoming <span className="text-yellow-400">Events</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-            {upcomingEvents.map((event) => (
-              <div key={event.id} className="bg-black/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl overflow-hidden hover:border-yellow-400/50 transition-all duration-300 group">
-                <div className="aspect-w-16 aspect-h-9">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex items-center space-x-2 mb-4">
-                    <div className="text-yellow-400">{event.icon}</div>
-                    <span className="text-yellow-400 text-sm font-semibold">{event.type}</span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-4">{event.title}</h3>
-                  <p className="text-gray-300 text-sm mb-4">{event.description}</p>
-                  
-                  <div className="space-y-2 mb-6">
-                    <div className="flex items-center space-x-2 text-gray-400 text-sm">
-                      <Calendar size={16} />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 text-sm">
-                      <Clock size={16} />
-                      <span>{event.time}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 text-sm">
-                      <MapPin size={16} />
-                      <span>{event.location}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-400 text-sm">
-                      <Users size={16} />
-                      <span>{event.participants} participants</span>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full bg-gradient-to-r from-yellow-400 to-yellow-500 text-black py-3 rounded-full font-bold hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 flex items-center justify-center space-x-2">
-                    <span>Register</span>
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Past Events */}
-      <section className="py-20 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-              Past <span className="text-yellow-400">Events</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">A Glimpse into Our Past</h2>
+            <p className="text-xl text-gray-400">See what we've been up to.</p>
+          </motion.div>
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
             {pastEvents.map((event) => (
-              <div key={event.id} className="bg-gray-900/50 backdrop-blur-sm border border-yellow-400/20 rounded-2xl overflow-hidden hover:border-yellow-400/50 transition-all duration-300 group">
-                <div className="aspect-w-16 aspect-h-9">
-                  <img
-                    src={event.image}
-                    alt={event.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2">{event.title}</h3>
-                  <div className="flex items-center space-x-4 text-gray-400 text-sm mb-4">
-                    <div className="flex items-center space-x-1">
-                      <Calendar size={16} />
-                      <span>{event.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <Users size={16} />
-                      <span>{event.participants} participants</span>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <h4 className="text-yellow-400 font-semibold">Highlights:</h4>
-                    <ul className="space-y-1">
-                      {event.highlights.map((highlight, index) => (
-                        <li key={index} className="text-gray-300 text-sm flex items-center space-x-2">
-                          <div className="w-1 h-1 bg-yellow-400 rounded-full"></div>
-                          <span>{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
+              <motion.div key={event.id} className="group relative rounded-2xl overflow-hidden shadow-lg" variants={itemVariants}>
+                <img src={event.image} alt={event.title} className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                  <h3 className="text-3xl font-bold mb-2">{event.title}</h3>
+                  <div className="flex items-center space-x-6 text-gray-300">
+                    <div className="flex items-center gap-2"><Calendar size={16} /><span>{event.date}</span></div>
+                    <div className="flex items-center gap-2"><Users size={16} /><span>{event.participants} Participants</span></div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
-
+      
       {/* Call to Action */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 to-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-            Don't Miss Out!
-          </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Stay updated with our latest events and workshops. Follow us on social media for announcements.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black px-8 py-4 rounded-full font-bold text-lg hover:from-yellow-500 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-yellow-400/50 inline-flex items-center space-x-2">
-              <Calendar size={20} />
-              <span>View Calendar</span>
-            </button>
-            <a
-              href="/contact"
-              className="border-2 border-yellow-400 text-yellow-400 px-8 py-4 rounded-full font-bold text-lg hover:bg-yellow-400 hover:text-black transition-all duration-300 transform hover:scale-105 inline-flex items-center space-x-2"
-            >
-              <span>Contact Us</span>
-            </a>
-          </div>
+      <section className="py-24 bg-gradient-to-br from-yellow-400 to-yellow-600">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+                <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 drop-shadow-lg">Don't Miss a Beat!</h2>
+                <p className="text-xl text-black/80 mb-10 max-w-2xl mx-auto">
+                    Be the first to know when we drop our new event schedule. Follow us on Instagram for all the latest announcements, behind-the-scenes content, and more.
+                </p>
+                <motion.a 
+                    href="https://instagram.com/reelhaus.iare" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-yellow-400 bg-black rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-2xl" 
+                    whileHover={{ y: -3 }} 
+                    whileTap={{ y: 1 }}
+                >
+                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/20 rounded-full group-hover:w-40 group-hover:h-40"></span>
+                    <span className="relative flex items-center"><Instagram className="w-6 h-6 mr-3" /> Follow Us</span>
+                </motion.a>
+            </motion.div>
         </div>
       </section>
     </div>
