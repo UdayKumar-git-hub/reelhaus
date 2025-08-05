@@ -8,6 +8,7 @@ const CoreTeam = () => {
       name: "Nandana",
       year: "2nd Yr CSE",
       icon: <Crown className="w-6 h-6" />,
+      image: "https://images.pexels.com/photos/1587927/pexels-photo-1587927.jpeg?auto=compress&cs=tinysrgb&w=400"
       description: "Leading the club's vision and strategic direction"
     },
     {
