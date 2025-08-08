@@ -3,11 +3,6 @@ import { Calendar, Users, ArrowRight, Instagram, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Events = () => {
-  const pastEvents = [
-    { id: 1, title: "Club Launch Event", date: "January 10, 2024", participants: 300, image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800" },
-    { id: 2, title: "First Photography Walk", date: "January 25, 2024", participants: 80, image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=800" }
-  ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
@@ -55,27 +50,25 @@ const Events = () => {
         </div>
       </section>
 
-      {/* Past Events Showcase */}
-      <section className="py-24 bg-black">
+      {/* Club Updates Section */}
+      <section className="py-24 bg-gradient-to-br from-gray-900 via-black to-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">A Glimpse into Our Past</h2>
-            <p className="text-xl text-gray-400">See what we've been up to.</p>
-          </motion.div>
-          <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-            {pastEvents.map((event) => (
-              <motion.div key={event.id} className="group relative rounded-2xl overflow-hidden shadow-lg" variants={itemVariants}>
-                <img src={event.image} alt={event.title} className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                  <h3 className="text-3xl font-bold mb-2">{event.title}</h3>
-                  <div className="flex items-center space-x-6 text-gray-300">
-                    <div className="flex items-center gap-2"><Calendar size={16} /><span>{event.date}</span></div>
-                    <div className="flex items-center gap-2"><Users size={16} /><span>{event.participants} Participants</span></div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          <motion.div className="text-center max-w-4xl mx-auto" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">The Club is <span className="text-yellow-400">Cooking</span> Something Special!</h2>
+            <div className="space-y-6 text-lg text-gray-300 leading-relaxed">
+              <p>
+                Behind the scenes at Reel HausClub, our creative minds are working tirelessly to bring you an extraordinary lineup of events, workshops, and experiences that will revolutionize how we approach content creation at IARE.
+              </p>
+              <p>
+                We're crafting immersive workshops with industry professionals, planning exclusive masterclasses on viral content creation, organizing photography expeditions around campus, and designing competitions that will showcase the incredible talent within our student community.
+              </p>
+              <p>
+                From hands-on sessions with professional cinematographers to collaborative projects that will put IARE on the digital map, we're preparing experiences that go beyond traditional club activities. Think interactive storytelling workshops, brand partnership opportunities, and networking events with content creators who've made it big.
+              </p>
+              <p className="text-yellow-400 font-semibold text-xl">
+                The wait will be worth it. Something big is coming, and you won't want to miss it.
+              </p>
+            </div>
           </motion.div>
         </div>
       </section>
