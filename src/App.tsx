@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
+
+// You will need to create these component and page files
+// For now, these imports will cause errors until the files exist
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -12,16 +14,16 @@ import Articles from './pages/Articles';
 import Projects from './pages/Projects';
 import JoinUs from './pages/JoinUs';
 import Contact from './pages/Contact';
-import Hiring from './pages/Hiring';
-
+import Hiring from './pages/Hiring'; // This will be your detailed hiring page
+// import ErrorBoundary from './components/ErrorBoundary'; // Optional: for advanced error handling
 
 function App() {
   return (
-    <ErrorBoundary>
+    // <ErrorBoundary>
       <Router>
-        <div className="min-h-screen bg-black text-white">
+        <div className="min-h-screen bg-black text-white flex flex-col">
           <Navbar />
-          <main>
+          <main className="flex-grow pt-20"> {/* Adjust pt-20 based on your Navbar's height */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -38,7 +40,7 @@ function App() {
           <Footer />
         </div>
       </Router>
-    </ErrorBoundary>
+    // </ErrorBoundary>
   );
 }
 
