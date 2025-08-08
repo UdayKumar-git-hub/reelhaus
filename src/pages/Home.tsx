@@ -111,7 +111,7 @@ const App = () => {
                                 <span className="relative flex items-center"><Users className="w-6 h-6 mr-3" /> Join the Movement</span>
                             </motion.a>
                             <motion.a 
-                                href="https://instagram.com/reelhaus.iare" 
+                                href="https://instagram.com/reelhaus.hyd" 
                                 target="_blank" 
                                 rel="noopener noreferrer"
                                 className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-yellow-400 bg-transparent border-2 border-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 hover:bg-yellow-400/10 hover:shadow-[0_0_20px_rgba(234,179,8,0.4)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
