@@ -3,7 +3,11 @@ import { Calendar, Users, ArrowRight, Instagram, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Events = () => {
-  
+  const pastEvents = [
+    { id: 1, title: "Club Launch Event", date: "January 10, 2024", participants: 300, image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800" },
+    { id: 2, title: "First Photography Walk", date: "January 25, 2024", participants: 80, image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=800" }
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
