@@ -12,6 +12,8 @@ import Articles from './pages/Articles';
 import Projects from './pages/Projects';
 import JoinUs from './pages/JoinUs';
 import Contact from './pages/Contact';
+import Hiring from './pages/Hiring';
+
 
 function App() {
   return (
