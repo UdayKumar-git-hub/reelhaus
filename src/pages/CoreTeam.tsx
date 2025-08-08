@@ -4,20 +4,20 @@ import { motion } from 'framer-motion';
 
 const CoreTeam = () => {
   const teamMembers = [
-    { role: "President", name: "Nandana", year: "2nd Yr CSE", icon: <Crown className="w-8 h-8" />, image: "https://i.postimg.cc/wTTk8k69/presiden.jpg", description: "Leading the club's vision and strategic direction.", color: "gold" },
-    { role: "Vice President", name: "Pallapati Levi", year: "1st Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/7hqnL30M/vice.jpg", description: "Supporting operations and team coordination.", color: "silver" },
-    { role: "Secretary", name: "P.Sai Jaswanth", year: "1st Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/h4005YRC/jas.jpg", description: "Managing documentation and communications.", color: "sky" },
-    { role: "Content & Design Head", name: "L.UdayKumar", year: "1st Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/RZWQqV68/design-head-post.jpg", description: "Overseeing visual design and creative direction.", color: "rose" },
-    { role: "Co-Head", name: "Tharun", year: "1st Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/9MdBV8RQ/tharun.jpg", description: "Assisting in creative and design leadership.", color: "rose" },
-    { role: "Technical Head", name: "Yeshwanth Reddy", year: "1st Year Mech", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/d3nmZh9M/yesh.jpg", description: "Managing technical infrastructure and development.", color: "emerald" },
-    { role: "CP/PR Head", name: "Akshitha", year: "1st Yr Mech", icon: <Megaphone className="w-8 h-8" />, image: "https://i.postimg.cc/KzVz3y0p/akshita.jpg", description: "Handling corporate partnerships and public relations.", color: "violet" },
-    { role: "Co-head", name: "Akil B", year: "1st Yr MECH", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/8Pttj0yF/akhil.jpg", description: "Supporting various club activities and initiatives.", color: "silver" },
-    { role: "Events Head", name: "Aasrith", year: "1st Yr CSM", icon: <Calendar className="w-8 h-8" />, image: "https://i.postimg.cc/PxsMgsq7/ashrith.jpg", description: "Organizing workshops, competitions, and events.", color: "orange" },
-    { role: "Co-head", name: "Brahmini", year: "1st Yr ECE", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/tJ0X7gGq/brahmini.jpg", description: "Supporting various club activities and initiatives.", color: "silver" },
-    { role: "Social Media Manager", name: "Jayani", year: "1st Yr CSE", icon: <Share2 className="w-8 h-8" />, image: "https://i.postimg.cc/YSm3Dqtg/jayni.jpg", description: "Managing social media presence and content strategy.", color: "cyan" },
-    { role: "Social Media Manager", name: "Sankeerthana", year: "1st Yr CSE", icon: <Share2 className="w-8 h-8" />, image: "https://i.postimg.cc/rFnN8tmx/sankeerthana-manager.jpg", description: "Curating content and engaging our online community.", color: "cyan" },
-    { role: "Logistics and Media", name: "Charan", year: "1st Yr ECE", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/t4xWzYg2/charan.jpg", description: "Coordinating logistics and media production.", color: "lime" },
-    { role: "Video Editor", name: "Snehas", year: "1st Yr Aero", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/4x0P1hRs/snehas.jpg", description: "Bringing our stories to life through video.", color: "lime" }
+    { role: "President", name: "Nandana", year: "3rd Yr CSE", icon: <Crown className="w-8 h-8" />, image: "https://i.postimg.cc/wTTk8k69/presiden.jpg", description: "Leading the club's vision and strategic direction.", color: "gold" },
+    { role: "Vice President", name: "Pallapati Levi", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/7hqnL30M/vice.jpg", description: "Supporting operations and team coordination.", color: "silver" },
+    { role: "Secretary", name: "P.Sai Jaswanth", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/h4005YRC/jas.jpg", description: "Managing documentation and communications.", color: "sky" },
+    { role: "Content & Design Head", name: "L.UdayKumar", year: "2nd Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/RZWQqV68/design-head-post.jpg", description: "Overseeing visual design and creative direction.", color: "rose" },
+    { role: "Co-Head", name: "Tharun", year: "2nd Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/9MdBV8RQ/tharun.jpg", description: "Assisting in creative and design leadership.", color: "rose" },
+    { role: "Technical Head", name: "Yeshwanth Reddy", year: "2nd Year Mech", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/d3nmZh9M/yesh.jpg", description: "Managing technical infrastructure and development.", color: "emerald" },
+    { role: "CP/PR Head", name: "Akshitha", year: "2nd Yr Mech", icon: <Megaphone className="w-8 h-8" />, image: "https://i.postimg.cc/KzVz3y0p/akshita.jpg", description: "Handling corporate partnerships and public relations.", color: "violet" },
+    { role: "Co-head", name: "Akil B", year: "2nd Yr MECH", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/8Pttj0yF/akhil.jpg", description: "Supporting various club activities and initiatives.", color: "silver" },
+    { role: "Events Head", name: "Aasrith", year: "2nd Yr CSM", icon: <Calendar className="w-8 h-8" />, image: "https://i.postimg.cc/PxsMgsq7/ashrith.jpg", description: "Organizing workshops, competitions, and events.", color: "orange" },
+    { role: "Co-head", name: "Brahmini", year: "2nd Yr ECE", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/tJ0X7gGq/brahmini.jpg", description: "Supporting various club activities and initiatives.", color: "silver" },
+    { role: "Social Media Manager", name: "Jayani", year: "2nd Yr CSE", icon: <Share2 className="w-8 h-8" />, image: "https://i.postimg.cc/YSm3Dqtg/jayni.jpg", description: "Managing social media presence and content strategy.", color: "cyan" },
+    { role: "Social Media Manager", name: "Sankeerthana", year: "2nd Yr CSE", icon: <Share2 className="w-8 h-8" />, image: "https://i.postimg.cc/rFnN8tmx/sankeerthana-manager.jpg", description: "Curating content and engaging our online community.", color: "cyan" },
+    { role: "Logistics and Media", name: "Charan", year: "2nd Yr ECE", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/t4xWzYg2/charan.jpg", description: "Coordinating logistics and media production.", color: "lime" },
+    { role: "Video Editor", name: "Snehas", year: "2nd Yr Aero", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/4x0P1hRs/snehas.jpg", description: "Bringing our stories to life through video.", color: "lime" }
   ];
 
   const containerVariants = {
