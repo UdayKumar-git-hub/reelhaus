@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PenSquare, Clock, User, ArrowRight, Rss, Search, Mic, BookOpen } from 'lucide-react';
+import { PenSquare, Clock, ArrowRight, Rss, Search, Mic, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Articles = () => {
@@ -10,12 +10,6 @@ const Articles = () => {
     { id: 'all', label: 'All Articles', icon: <Rss/> },
     { id: 'interviews', label: 'Interviews', icon: <Mic/> },
     { id: 'case-studies', label: 'Case Studies', icon: <BookOpen/> },
-  ];
-
-  const placeholderArticles = [
-    { id: 2, title: "An Interview with a Professional Cinematographer", category: "Interviews", image: "https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=800", author: "Levi", date: "Coming Soon" },
-    { id: 3, title: "Case Study: Boosting an Event's Social Reach by 500%", category: "Case Studies", image: "https://images.pexels.com/photos/1190298/pexels-photo-1190298.jpeg?auto=compress&cs=tinysrgb&w=800", author: "Akshitha", date: "Coming Soon" },
-    { id: 1, title: "Exploring the Art of Visual Storytelling", category: "Insights", image: "https://images.pexels.com/photos/1264210/pexels-photo-1264210.jpeg?auto=compress&cs=tinysrgb&w=800", author: "Nandana", date: "Coming Soon" },
   ];
 
   const containerVariants = {
@@ -89,20 +83,15 @@ const Articles = () => {
                 </p>
               </motion.div>
               <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
-                {placeholderArticles.map(article => (
-                  <motion.div key={article.id} className="group bg-gray-900/50 rounded-2xl border border-yellow-400/10 overflow-hidden" variants={itemVariants}>
-                    <div className="relative aspect-video overflow-hidden">
-                      <img src={article.image} alt={article.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                      <div className="absolute inset-0 bg-black/50"></div>
-                    </div>
-                    <div className="p-6">
-                      <p className="text-yellow-400 text-sm font-semibold mb-2">{article.category}</p>
-                      <h4 className="text-xl font-bold text-white mb-4 h-16">{article.title}</h4>
-                      <div className="flex justify-between items-center text-gray-400 text-sm">
-                        <span className="flex items-center gap-2"><User size={14}/> {article.author}</span>
-                        <span className="flex items-center gap-2"><Clock size={14}/> {article.date}</span>
-                      </div>
-                    </div>
+                {[1, 2, 3].map(id => (
+                  <motion.div
+                    key={id}
+                    className="aspect-video bg-gray-900/50 rounded-2xl border-2 border-dashed border-yellow-400/20 flex flex-col items-center justify-center p-6 text-center"
+                    variants={itemVariants}
+                  >
+                    <Clock className="w-12 h-12 text-yellow-400/40 mb-4" />
+                    <h4 className="text-xl font-bold text-white">Coming Soon</h4>
+                    <p className="text-gray-400 text-sm mt-1">A new story is being crafted for this spot.</p>
                   </motion.div>
                 ))}
               </motion.div>
