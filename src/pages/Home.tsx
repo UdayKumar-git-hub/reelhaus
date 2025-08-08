@@ -96,7 +96,7 @@ const App = () => {
                 <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
                     <motion.div variants={containerVariants} initial="hidden" animate="visible">
                         <motion.h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_30px_rgba(234,179,8,0.6)]" variants={itemVariants}>
-                            Reel HausClub
+                            ReelHaus Iare
                         </motion.h1>
                         <motion.p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-gray-300" variants={itemVariants}>
                             Elevating IARE's social presence through the lens of <span className="text-yellow-400 font-semibold">photography, filmmaking, and viral reel creation</span>.
