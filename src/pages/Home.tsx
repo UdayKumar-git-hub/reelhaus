@@ -67,8 +67,8 @@ const App = () => {
 
     const stats = [
         { number: 500, suffix: "+", label: "Students Reached", icon: <Users className="w-8 h-8" /> },
-        { number: 50, suffix: "+", label: "Content Created", icon: <Camera className="w-8 h-8" /> },
-        { number: 15, suffix: "+", label: "Events Covered", icon: <Calendar className="w-8 h-8" /> },
+        
+       
         { number: 10, suffix: "K+", label: "Social Media Reach", icon: <TrendingUp className="w-8 h-8" /> },
     ];
 
