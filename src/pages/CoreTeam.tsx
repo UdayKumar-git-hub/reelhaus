@@ -19,6 +19,7 @@ const CoreTeam = () => {
     { role: "Social Media Manager", name: "Bramhani", year: "2nd Yr CSE", icon: <Share2 className="w-8 h-8" />, image: "https://i.postimg.cc/mkTNjh1W/brahmani.jpg", description: "Managing social media presence and content strategy.", color: "cyan" },
     { role: "Social Media Manager", name: "Sankeerthana", year: "2nd Yr CSE", icon: <Share2 className="w-8 h-8" />, image: "https://i.postimg.cc/rFnN8tmx/sankeerthana-manager.jpg", description: "Curating content and engaging our online community.", color: "cyan" },
     { role: "Logistics and Media", name: "Charan", year: "2nd Yr ECE", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/02WdGk8h/Charan.jpg", description: "Coordinating logistics and media production.", color: "lime" },
+     { role: "Logistics and Media Co-Head", name: "Ashvith", year: "2nd Yr ", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/cCdvKbrd/ashvitj.jpg", description: "Coordinating logistics and media production.", color: "lime" },
     { role: "Video Editor", name: "Snehas", year: "2nd Yr Aero", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/4x0P1hRs/snehas.jpg", description: "Bringing our stories to life through video.", color: "lime" },
      { role: "Video Editor and Content Writer", name: "Sri Harsha", year: "2nd Yr AiMl", icon: <Truck className="w-8 h-8" />, image: "https://i.postimg.cc/k4LHGJkr/harsha.jpg", description: "Bringing our stories to life through video.", color: "lime" }
   ];
