@@ -6,7 +6,7 @@ const CoreTeam = () => {
   const teamMembers = [
     { role: "President", name: "Nandana", year: "3rd Yr CSE", icon: <Crown className="w-8 h-8" />, image: "https://i.postimg.cc/dVhR4b33/president.jpg", description: "Leading the club's vision and strategic direction.", color: "gold" },
     { role: "Vice President", name: "Pallapati Levi", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/7hqnL30M/vice.jpg", description: "Supporting operations and team coordination.", color: "silver" },
-    { role: "Secretary", name: "P.Sai Jaswanth", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/h4005YRC/jas.jpg", description: "Managing documentation and communications.", color: "sky" },
+    { role: "Secretary", name: "P.Sai Jaswanth", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/wjnXPwRV/jas.jpg", description: "Managing documentation and communications.", color: "sky" },
     { role: "Content & Design Head", name: "L.UdayKumar", year: "2nd Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/RZWQqV68/design-head-post.jpg", description: "Overseeing visual design and creative direction.", color: "rose" },
     { role: "Co-Head", name: "Tharun", year: "2nd Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/9MdBV8RQ/tharun.jpg", description: "Assisting in creative and design leadership.", color: "rose" },
     { role: "Technical Head", name: "Yeshwanth Reddy", year: "2nd Year Mech", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/d3nmZh9M/yesh.jpg", description: "Managing technical infrastructure and development.", color: "emerald" },
