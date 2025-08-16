@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 
 const CoreTeam = () => {
   const teamMembers = [
-    { role: "President", name: "Nandana", year: "3rd Yr CSE", icon: <Crown className="w-8 h-8" />, image: "https://i.postimg.cc/wxFhHqs3/nandana.jpg", description: "Leading the club's vision and strategic direction.", color: "gold" },
+    { role: "President", name: "Nandana", year: "3rd Yr CSE", icon: <Crown className="w-8 h-8" />, image: "hhttps://i.postimg.cc/dVhR4b33/president.jpg", description: "Leading the club's vision and strategic direction.", color: "gold" },
     { role: "Vice President", name: "Pallapati Levi", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/7hqnL30M/vice.jpg", description: "Supporting operations and team coordination.", color: "silver" },
     { role: "Secretary", name: "P.Sai Jaswanth", year: "2nd Yr IT", icon: <Shield className="w-8 h-8" />, image: "https://i.postimg.cc/h4005YRC/jas.jpg", description: "Managing documentation and communications.", color: "sky" },
     { role: "Content & Design Head", name: "L.UdayKumar", year: "2nd Yr", icon: <Settings className="w-8 h-8" />, image: "https://i.postimg.cc/RZWQqV68/design-head-post.jpg", description: "Overseeing visual design and creative direction.", color: "rose" },
