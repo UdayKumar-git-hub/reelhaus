@@ -56,9 +56,7 @@ const App = () => {
     ];
 
     const stats = [
-        { number: 25, suffix: "+", label: "Creative Workshops", icon: <Camera className="w-8 h-8" /> },
         { number: 500, suffix: "+", label: "Students Reached", icon: <Users className="w-8 h-8" /> },
-        { number: 15, suffix: "+", label: "Successful Events", icon: <Calendar className="w-8 h-8" /> },
         { number: 10, suffix: "K+", label: "Social Media Reach", icon: <TrendingUp className="w-8 h-8" /> },
     ];
 
@@ -142,7 +140,7 @@ const App = () => {
                                 </div>
                                 <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
                                     <h3 className="text-xl font-bold mb-2 truncate transition-transform duration-300 group-hover:-translate-y-1">{reel.title}</h3>
-                                    <div className="flex justify-between text-sm text-gray-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      _B_]         <div className="flex justify-between text-sm text-gray-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                         <span>{reel.views} views</span>
                                         <span>{reel.likes} likes</span>
                                     </div>
@@ -228,7 +226,7 @@ const App = () => {
                     <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
                         <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Our <span className="text-yellow-400">Impact</span> By The Numbers</h2>
                     </motion.div>
-                    <motion.div className="grid grid-cols-1 md:grid-cols-4 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                    <motion.div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                         {stats.map((stat, index) => (
                             <motion.div key={index} className={`p-8 rounded-2xl text-center transition-all duration-300 group ${isDarkMode ? 'bg-gray-800/50 hover:bg-gray-800' : 'bg-gray-100 hover:bg-gray-200'}`} variants={itemVariants} whileHover={{ y: -10, boxShadow: "0 20px 25px -5px rgba(234, 179, 8, 0.15), 0 10px 10px -5px rgba(234, 179, 8, 0.1)" }}>
                                 <div className="text-yellow-400 mb-4 transition-transform duration-300 group-hover:scale-125 flex justify-center">{stat.icon}</div>
