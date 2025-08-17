@@ -81,8 +81,8 @@ const Events = () => {
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5, type: 'spring', stiffness: 150 }}>
                   <Film className="w-16 h-16 text-yellow-400 mx-auto mb-4 drop-shadow-[0_0_15px_rgba(234,179,8,0.8)]" />
                 </motion.div>
-[cite_start]                <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500">Reel Haus Creator Fest - IARE Hyderabad [cite: 1]</h3>
-[cite_start]                <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">Empowering students to craft reels that promote IARE's digital identity through creativity and storytelling. [cite: 2]</p>
+                <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500">Reel Haus Creator Fest - IARE Hyderabad</h3>
+                <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">Empowering students to craft reels that promote IARE's digital identity through creativity and storytelling.</p>
               </div>
 
               <motion.div
@@ -95,20 +95,20 @@ const Events = () => {
                 <motion.div variants={itemVariants} className="bg-gray-900/50 p-6 rounded-xl border border-gray-700 hover:border-yellow-400/50 transition-colors duration-300">
                   <h4 className="font-bold text-2xl text-yellow-400 mb-4 flex items-center"><Target className="w-6 h-6 mr-3" /> Core Objectives</h4>
                   <ul className="space-y-3 text-gray-300">
-[cite_start]                    <li className="flex items-start"><Sparkles className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Train students in short-form content creation. [cite: 6]</span></li>
-[cite_start]                    <li className="flex items-start"><Scissors className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Explore visual storytelling for digital promotion. [cite: 5]</span></li>
-[cite_start]                    <li className="flex items-start"><BookOpen className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Showcase IARE's spirit, culture, and facilities. [cite: 7]</span></li>
+                    <li className="flex items-start"><Sparkles className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Train students in short-form content creation.</span></li>
+                    <li className="flex items-start"><Scissors className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Explore visual storytelling for digital promotion.</span></li>
+                    <li className="flex items-start"><BookOpen className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Showcase IARE's spirit, culture, and facilities.</span></li>
                   </ul>
                 </motion.div>
                 
                 <motion.div variants={itemVariants} className="relative bg-gray-900/50 p-6 rounded-xl border border-gray-700 overflow-hidden">
                   <h4 className="font-bold text-2xl text-yellow-400 mb-4 flex items-center"><Clock className="w-6 h-6 mr-3" /> Event Structure</h4>
                   <div className="space-y-3 text-gray-400 blur-sm select-none">
-[cite_start]                    <p>Round 1: Frame the Fame [cite: 22] - [cite_start][20 Points] [cite: 28]</p>
-[cite_start]                    <p>Round 2: Trailer Cuts [cite: 29] - [cite_start][30 Points] [cite: 38]</p>
-[cite_start]                    <p>Round 3: Ad Blitz [cite: 43] - [cite_start][25 Points] [cite: 52]</p>
-[cite_start]                    <p>Round 4: Idea Hack [cite: 53] - [cite_start][15 Points] [cite: 65]</p>
-[cite_start]                    <p>Round 5: Cut & Create [cite: 66] - [cite_start][40 Points] [cite: 77]</p>
+                    <p>Round 1: Frame the Fame - [20 Points]</p>
+                    <p>Round 2: Trailer Cuts - [30 Points]</p>
+                    <p>Round 3: Ad Blitz - [25 Points]</p>
+                    <p>Round 4: Idea Hack - [15 Points]</p>
+                    <p>Round 5: Cut & Create - [40 Points]</p>
                   </div>
                   <div className="absolute inset-0 flex items-center justify-center bg-black/70 backdrop-blur-[1px]">
                     <div className="text-center p-4 border-2 border-dashed border-yellow-400/50 rounded-lg">
@@ -126,7 +126,7 @@ const Events = () => {
               	viewport={{ once: true }}
               	transition={{ delay: 0.5, duration: 1 }}
             	>
-[cite_start]                <p className="text-2xl font-bold text-white">Venue & Date: <span className="text-yellow-400 drop-shadow-[0_0_10px_rgba(234,179,8,0.7)]">FINALIZING... STAY TUNED.</span> [cite: 3]</p>
+                <p className="text-2xl font-bold text-white">Venue & Date: <span className="text-yellow-400 drop-shadow-[0_0_10px_rgba(234,179,8,0.7)]">FINALIZING... STAY TUNED.</span></p>
               	<p className="mt-4 text-gray-400">Keep an eye on our Instagram for the official announcement and registration details.</p>
               </motion.div>
             </div>
