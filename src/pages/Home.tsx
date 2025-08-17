@@ -183,7 +183,7 @@ const App = () => {
                                             <div className="text-5xl md:text-6xl font-bold tracking-tighter">{String(value).padStart(2, '0')}</div>
                                         </div>
                                         <div className="text-lg font-semibold mt-3 capitalize">{unit}</div>
-                                    </motion.div>
+                          _B_]       </motion.div>
                                 ))}
                             </motion.div>
                         )}
@@ -208,7 +208,8 @@ const App = () => {
                                 <div className={`text-4xl md:text-5xl font-bold mb-2 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}><CountUp end={stat.number} suffix={stat.suffix} /></div>
                                 <div className={`font-semibold ${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>{stat.label}</div>
                             </motion.div>
-                _B_]     </motion.div>
+                        ))}
+                    </motion.div>
                 </div>
             </section>
 
@@ -227,7 +228,7 @@ const App = () => {
                             <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-40 group-hover:h-40"></span>
                             <span className="relative flex items-center">Apply Now <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-2" /></span>
                         </motion.a>
-            _B_]       </motion.div>
+                    </motion.div>
                 </div>
             </section>
 
