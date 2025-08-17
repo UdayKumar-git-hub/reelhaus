@@ -1,32 +1,6 @@
 import React from 'react';
-import { Play, Camera, Users, Calendar, Instagram, Linkedin, Facebook, TrendingUp, ArrowRight } from 'lucide-react';
-import { motion, AnimatePresence, useInView, animate } from 'framer-motion';
-
-// A custom hook for the countdown timer
-const useCountdown = (targetDate) => {
-    const [timeLeft, setTimeLeft] = React.useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-    React.useEffect(() => {
-        if (!targetDate) return;
-        const timer = setInterval(() => {
-            const distance = new Date(targetDate).getTime() - new Date().getTime();
-            if (distance > 0) {
-                setTimeLeft({
-                    days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-                    hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-                    minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-                    seconds: Math.floor((distance % (1000 * 60)) / 1000),
-                });
-            } else {
-                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-                clearInterval(timer);
-            }
-        }, 1000);
-        return () => clearInterval(timer);
-    }, [targetDate]);
-
-    return timeLeft;
-};
+import { Play, Camera, Users, Calendar, Instagram, Linkedin, Facebook, TrendingUp, ArrowRight, Target, Scissors, BookOpen, Clock } from 'lucide-react';
+import { motion, useInView, animate } from 'framer-motion';
 
 // Animated Counter Component
 const CountUp = ({ end, suffix = '' }) => {
@@ -53,9 +27,25 @@ const CountUp = ({ end, suffix = '' }) => {
 
 const App = () => {
     const [isDarkMode, setIsDarkMode] = React.useState(true);
-    // Set a plausible future date for the event to make the countdown active.
-    const nextEventDate = '2025-09-28T09:40:00';
-    const timeLeft = useCountdown(nextEventDate);
+    // State and handlers for the 3D tilt effect
+    const [rotateX, setRotateX] = React.useState(0);
+    const [rotateY, setRotateY] = React.useState(0);
+
+    const handleMouseMove = (event) => {
+        const card = event.currentTarget;
+        const { left, top, width, height } = card.getBoundingClientRect();
+        const x = event.clientX - left;
+        const y = event.clientY - top;
+        const rotateXValue = -1 * ((y - height / 2) / (height / 2)) * 10;
+        const rotateYValue = ((x - width / 2) / (width / 2)) * 10;
+        setRotateX(rotateXValue);
+        setRotateY(rotateYValue);
+    };
+
+    const handleMouseLeave = () => {
+        setRotateX(0);
+        setRotateY(0);
+    };
 
     const toggleDarkMode = () => setIsDarkMode(!isDarkMode);
 
@@ -163,38 +153,75 @@ const App = () => {
                 </div>
             </section>
             
-            <section className="py-24 bg-gradient-to-br from-yellow-400 to-yellow-600 text-black overflow-hidden">
-                <div className="relative max-w-7xl mx-auto px-4 text-center">
-                    <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
-                        <h2 className="text-4xl md:text-5xl font-black mb-2 drop-shadow-lg">Next Big Event</h2>
-                        <h3 className="text-3xl font-bold text-black/80 mb-4">Reel Haus Creator Fest</h3>
-                            <p className="max-w-3xl mx-auto text-lg text-black/70 mb-8">
-                                A full-day creative showdown to empower students in short-form content creation, from ideation and shooting to editing and pitching.
-                            </p>
-                    </motion.div>
-                    <AnimatePresence>
-                        {(!nextEventDate || (timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0)) ? (
-                            <motion.p key="event-ended" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-2xl text-center font-bold">To be Announced!</motion.p>
-                        ) : (
-                            <motion.div key="countdown" className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.5 }}>
-                                {Object.entries(timeLeft).map(([unit, value]) => (
-                                    <motion.div key={unit} className="text-center" variants={itemVariants}>
-                                        <div className="bg-black/80 backdrop-blur-sm text-yellow-400 rounded-2xl p-6 shadow-lg transition-all duration-300 hover:bg-black hover:shadow-yellow-400/40 hover:shadow-2xl hover:-translate-y-2">
-                                            <div className="text-5xl md:text-6xl font-bold tracking-tighter">{String(value).padStart(2, '0')}</div>
-                                        </div>
-                                        <div className="text-lg font-semibold mt-3 capitalize">{unit}</div>
-                          _B_]       </motion.div>
-                                ))}
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                        <motion.a 
-                            href="/events" // This should link to your events page
-                            className="group mt-12 relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-yellow-400 bg-black rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
-                            <span className="relative flex items-center">Learn More <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" /></span>
-                        </motion.a>
-                </div>
-            </section>
+            <section className={`py-24 ${isDarkMode ? 'bg-black' : 'bg-gray-900'}`} style={{ perspective: '1200px' }}>
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <motion.div
+                            className="text-center mb-16"
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.8 }}
+                        >
+                            <h2 className="text-lg font-semibold text-yellow-400 uppercase tracking-widest">Our Next Big Event</h2>
+                            <p className="mt-4 text-4xl md:text-6xl font-black text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">Get Ready to Create</p>
+                        </motion.div>
+
+                        <motion.div
+                            className="relative group rounded-3xl overflow-hidden"
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ transform: `rotateX(${rotateX}deg) rotateY(${rotateY}deg)` }}
+                            onMouseMove={handleMouseMove}
+                            onMouseLeave={handleMouseLeave}
+                        >
+                            <div className="absolute inset-0 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl transition-all duration-300 ease-out"></div>
+                            <div className="absolute inset-[-100px] bg-[radial-gradient(circle_at_50%_50%,rgba(234,179,8,0.25),transparent_40%)] animate-aurora" style={{animation: "aurora 30s linear infinite"}}></div>
+                            
+                            <div className="relative p-8 sm:p-12">
+                                <div className="text-center">
+                                    <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500">Reel Haus Creator Fest</h3>
+                                    <p className="mt-4 text-xl text-gray-300 max-w-3xl mx-auto">A full-day creative showdown to empower students in the art of short-form content.</p>
+                                </div>
+
+                                <motion.div
+                                    className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 text-lg"
+                                    variants={containerVariants}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true, amount: 0.3 }}
+                                >
+                                    <motion.div variants={itemVariants} className="bg-black/20 p-6 rounded-xl border border-white/10 hover:border-yellow-400/50 transition-colors duration-300">
+                                        <h4 className="font-bold text-2xl text-yellow-400 mb-4 flex items-center"><Target className="w-6 h-6 mr-3" /> Core Objectives</h4>
+                                        <ul className="space-y-3 text-gray-300">
+                                            <li className="flex items-start transition-colors hover:text-white"><Play className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Train in short-form content creation.</span></li>
+                                            <li className="flex items-start transition-colors hover:text-white"><Scissors className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Explore visual storytelling for promotion.</span></li>
+                                            <li className="flex items-start transition-colors hover:text-white"><BookOpen className="w-5 h-5 mr-3 mt-1 text-yellow-500 flex-shrink-0" /><span>Showcase IARE's unique spirit & culture.</span></li>
+                                        </ul>
+                                    </motion.div>
+                                    
+                                    <motion.div variants={itemVariants} className="group/declassify relative bg-black/20 p-6 rounded-xl border border-white/10 overflow-hidden">
+                                        <h4 className="font-bold text-2xl text-yellow-400 mb-4 flex items-center"><Clock className="w-6 h-6 mr-3" /> Event Structure</h4>
+                                        <div className="space-y-3 text-gray-400 blur-md group-hover/declassify:blur-sm transition-all duration-500 select-none">
+                                            <p>Round 1: Frame the Fame - [20 Points]</p>
+                                            <p>Round 2: Trailer Cuts - [30 Points]</p>
+                                            <p>Round 3: Ad Blitz - [25 Points]</p>
+                                            <p>Round 4: Idea Hack - [15 Points]</p>
+                                            <p>Round 5: Cut & Create - [40 Points]</p>
+                                        </div>
+                                        <div className="absolute inset-0 flex items-center justify-center bg-black/70 opacity-100 group-hover/declassify:opacity-0 transition-opacity duration-500">
+                                            <div className="text-center p-4 border-2 border-dashed border-yellow-400/50 rounded-lg">
+                                                <p className="font-bold text-xl text-yellow-400 tracking-widest">CLASSIFIED</p>
+                                                <p className="text-lg font-semibold text-white mt-1">HOVER TO DECLASSIFY</p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                </motion.div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </section>
 
             <section className={`py-24 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className="max-w-7xl mx-auto px-4">
@@ -242,6 +269,14 @@ const App = () => {
                     <p className={`text-sm ${isDarkMode ? 'text-gray-500' : 'text-gray-600'}`}>&copy; {new Date().getFullYear()} Reel HausClub. All Rights Reserved.</p>
                 </div>
             </footer>
+
+            <style jsx global>{`
+                @keyframes aurora {
+                    0% { transform: translate(-20%, -20%) rotate(0deg); }
+                    50% { transform: translate(20%, 20%) rotate(180deg); }
+                    100% { transform: translate(-20%, -20%) rotate(360deg); }
+                }
+            `}</style>
         </div>
     );
 };
