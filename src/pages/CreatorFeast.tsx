@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lucide-react';
-import { supabase } from "./supabaseEventClient";
+//import { supabase } from "./supabaseEventClient";
 
 
 // --- Supabase Client Setup ---
