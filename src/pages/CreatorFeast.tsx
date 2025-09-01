@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../supabaseClient'; // Import your Supabase client
-import { Send, Film, User, Hash, Briefcase, Phone, Mail, Users, CreditCard, Upload, CheckSquare, ChevronDown } from 'lucide-react';
+import { Send, CheckSquare, ChevronDown, Calendar, Clock, MapPin, Award, Mic, Gift } from 'lucide-react';
+import eventPoster from '../assets/rh_feast_13_sep.jpg'; // Make sure to place your image in the correct path
 
 // A simple SVG loader component to show during submission
 const Loader = () => (
@@ -22,7 +23,6 @@ const CreatorFeastRegistration = () => {
     email: '',
     participationType: '',
     teamDetails: '',
-    paymentMode: '',
     transactionId: '',
     paymentScreenshot: null,
     consent: false,
@@ -80,29 +80,25 @@ const CreatorFeastRegistration = () => {
 
     try {
       let screenshotUrl = '';
-      // --- Supabase Storage Logic (Optional) ---
-      // If a screenshot is provided, upload it to Supabase Storage first.
       if (formData.paymentScreenshot) {
         const file = formData.paymentScreenshot;
         const fileName = `${Date.now()}-${file.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('payment-screenshots') // NOTE: You must create a bucket named 'payment-screenshots' in your Supabase project.
+        const { error: uploadError } = await supabase.storage
+          .from('payment-screenshots')
           .upload(fileName, file);
 
         if (uploadError) throw uploadError;
 
-        // Get the public URL of the uploaded file.
         const { data: urlData } = supabase.storage
           .from('payment-screenshots')
           .getPublicUrl(fileName);
         screenshotUrl = urlData.publicUrl;
       }
-      // --- End of Storage Logic ---
 
       const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
 
       const { error } = await supabase
-        .from('creator_feast_registrations') // NOTE: Ensure you have a table with this name in Supabase.
+        .from('creator_feast_registrations')
         .insert([{
           full_name: formData.fullName,
           roll_number: formData.rollNumber,
@@ -112,7 +108,7 @@ const CreatorFeastRegistration = () => {
           email: formData.email,
           participation_type: formData.participationType,
           team_details: formData.teamDetails,
-          payment_mode: formData.paymentMode,
+          payment_mode: 'UPI', // Hardcoded as UPI
           transaction_id: formData.transactionId,
           screenshot_url: screenshotUrl,
           has_consented: formData.consent,
@@ -123,9 +119,8 @@ const CreatorFeastRegistration = () => {
       setSubmitMessage('Registration successful! We look forward to seeing you.');
       setFormData({
         fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
-        participationType: '', teamDetails: '', paymentMode: '', transactionId: '', paymentScreenshot: null, consent: false,
+        participationType: '', teamDetails: '', transactionId: '', paymentScreenshot: null, consent: false,
       });
-      // Reset file input visually
       document.getElementById('paymentScreenshot').value = null;
 
     } catch (error) {
@@ -140,23 +135,41 @@ const CreatorFeastRegistration = () => {
 
   return (
     <div className="min-h-screen bg-black text-gray-200 font-sans">
-      <section className="relative py-32 bg-gradient-to-b from-gray-900 via-black to-black text-center overflow-hidden">
-        <div className="absolute inset-0 z-0 opacity-10">
-            <div className="absolute h-full w-full bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_50%,transparent_100%)]"></div>
+      <section className="relative py-20 md:py-32 bg-gradient-to-b from-gray-900 via-black to-black overflow-hidden">
+        <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_50%,transparent_100%)]"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+            >
+                <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.5)]">
+                    ReelHaus Creator Feast
+                </h1>
+                <div className="space-y-4 text-lg text-gray-300 mb-6">
+                    <p className="flex items-center gap-3"><Calendar className="w-5 h-5 text-yellow-400" /> <strong>Date:</strong> 13th September</p>
+                    <p className="flex items-center gap-3"><Clock className="w-5 h-5 text-yellow-400" /> <strong>Time:</strong> 9:50 AM Onwards</p>
+                    <p className="flex items-center gap-3"><MapPin className="w-5 h-5 text-yellow-400" /> <strong>Venue:</strong> IARE, Hyderabad</p>
+                </div>
+                <div className="border-l-4 border-yellow-400 pl-4 py-2 space-y-2">
+                    <h3 className="text-2xl font-bold text-white">Perks & Surprises:</h3>
+                    <ul className="list-inside text-gray-400 space-y-1">
+                        <li className="flex items-center gap-2"><Award className="w-4 h-4 text-yellow-500"/>Participation Certificate</li>
+                        <li className="flex items-center gap-2"><Award className="w-4 h-4 text-yellow-500"/>Prize Money & On-spot Hiring</li>
+                        <li className="flex items-center gap-2"><Mic className="w-4 h-4 text-yellow-500"/>Open Mic & Goodies</li>
+                        <li className="flex items-center gap-2"><Gift className="w-4 h-4 text-yellow-500"/>And many more surprises!</li>
+                    </ul>
+                </div>
+            </motion.div>
+            <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className="flex justify-center"
+            >
+                <img src={eventPoster} alt="ReelHaus Creator Feast Poster" className="rounded-2xl shadow-2xl shadow-yellow-400/20 w-full max-w-sm border-4 border-yellow-400/30" />
+            </motion.div>
         </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-10"
-        >
-          <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-4 drop-shadow-[0_0_35px_rgba(234,179,8,0.5)]">
-            ReelHaus Creator Feast
-          </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-            Join us for a full-day creative showdown. Register now and unleash your inner storyteller!
-          </p>
-        </motion.div>
       </section>
 
       <section className="py-24 bg-gray-900/50">
@@ -205,7 +218,7 @@ const CreatorFeastRegistration = () => {
             {/* Contact Details */}
             <motion.div variants={formItemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <input type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleChange} placeholder="Contact Number* (10 digits)" required pattern="[0-9]{10}" className={inputStyles} />
-              <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email ID (Optional)" className={inputStyles} />
+              <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email ID*" required className={inputStyles} />
             </motion.div>
 
             {/* Participation Type */}
@@ -233,44 +246,15 @@ const CreatorFeastRegistration = () => {
             </AnimatePresence>
 
             {/* Payment Details */}
-            <motion.div variants={formItemVariants}>
-                <label className="block text-lg font-semibold text-white mb-4">Mode of Payment*</label>
-                <div className="flex gap-8">
-                    <label className="flex items-center gap-3 text-lg cursor-pointer">
-                        <input type="radio" name="paymentMode" value="UPI" onChange={handleChange} checked={formData.paymentMode === 'UPI'} required className="hidden peer" />
-                        <span className="w-6 h-6 rounded-full border-2 border-gray-500 flex items-center justify-center transition-all peer-checked:border-yellow-400 peer-checked:bg-yellow-400">
-                           <motion.span className="w-2.5 h-2.5 rounded-full bg-black" initial={{ scale: 0 }} animate={{ scale: formData.paymentMode === 'UPI' ? 1 : 0 }}></motion.span>
-                        </span>
-                        UPI
-                    </label>
-                    <label className="flex items-center gap-3 text-lg cursor-pointer">
-                        <input type="radio" name="paymentMode" value="Cash" onChange={handleChange} checked={formData.paymentMode === 'Cash'} required className="hidden peer" />
-                        <span className="w-6 h-6 rounded-full border-2 border-gray-500 flex items-center justify-center transition-all peer-checked:border-yellow-400 peer-checked:bg-yellow-400">
-                            <motion.span className="w-2.5 h-2.5 rounded-full bg-black" initial={{ scale: 0 }} animate={{ scale: formData.paymentMode === 'Cash' ? 1 : 0 }}></motion.span>
-                        </span>
-                        Cash
-                    </label>
+            <motion.div variants={formItemVariants} className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20">
+                <h3 className="text-lg font-semibold text-white">Payment Details (UPI Only)</h3>
+                <input type="text" name="transactionId" value={formData.transactionId} onChange={handleChange} placeholder="Transaction ID*" required className={inputStyles} />
+                <div>
+                    <label htmlFor="paymentScreenshot" className="block text-lg font-semibold text-white mb-4">Upload Screenshot* (max 5MB)</label>
+                    <input type="file" id="paymentScreenshot" name="paymentScreenshot" onChange={handleFileChange} accept="image/png, image/jpeg, image/jpg" required className="w-full text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-500 cursor-pointer" />
+                    {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
                 </div>
             </motion.div>
-
-            <AnimatePresence>
-            {formData.paymentMode === 'UPI' && (
-                <motion.div
-                    className="space-y-6"
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                >
-                    <input type="text" name="transactionId" value={formData.transactionId} onChange={handleChange} placeholder="Transaction ID*" required className={inputStyles} />
-                    <div>
-                      <label htmlFor="paymentScreenshot" className="block text-lg font-semibold text-white mb-4">Upload Screenshot (Optional, max 5MB)</label>
-                      <input type="file" id="paymentScreenshot" name="paymentScreenshot" onChange={handleFileChange} accept="image/png, image/jpeg, image/jpg" className="w-full text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-500 cursor-pointer" />
-                      {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
-                    </div>
-                </motion.div>
-            )}
-            </AnimatePresence>
             
             {/* Consent Checkbox */}
             <motion.div variants={formItemVariants}>
