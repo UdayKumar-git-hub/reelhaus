@@ -37,6 +37,7 @@ function App() {
               <Route path="/join" element={<JoinUs />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/hiring" element={<Hiring />} />
+              <Route path="/creatorfeast" element={<CreatorFeast />} />
             </Routes>
           </main>
           <Footer />
