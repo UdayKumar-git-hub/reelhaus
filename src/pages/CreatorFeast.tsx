@@ -26,7 +26,7 @@ const App = () => {
   const [fileError, setFileError] = useState('');
 
   const branches = ["CSE", "AIML", "IT", "ECE", "EEE", "Mechanical", "Civil", "Other"];
-  const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
+  const years = ["2nd Year", "3rd Year", "4th Year"]; // "1st Year" removed
   const participationOptions = [
     { value: "Individual", label: "Individual (₹9)", amount: 9 },
     { value: "Team of 2", label: "Team of 2 (₹15)", amount: 15 },
@@ -242,7 +242,7 @@ const App = () => {
                   <h3 className="text-xl font-semibold text-white">Payment Details (UPI Only)</h3>
                   <div className="flex flex-col md:flex-row items-center gap-8">
                     <div className="text-center">
-                        <img src={qrCodeUrl} alt="Payment QR Code" className="w-48 h-48 rounded-lg mx-auto border-2 border-gray-700"/>
+                        <img src={qrCodeUrl} alt="Payment QR Code" className="w-64 h-64 rounded-lg mx-auto border-2 border-gray-700"/> {/* Increased size */}
                         <p className="mt-2 text-yellow-400 font-bold text-2xl">Pay: ₹{paymentAmount}</p>
                     </div>
                     <div className="w-full space-y-6">
