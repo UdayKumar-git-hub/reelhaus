@@ -147,19 +147,8 @@ const App = () => {
                     </motion.div>
                 </div>
             </section>
-
-            <section className={`py-24 ${isDarkMode ? 'bg-gray-900/50' : 'bg-white'}`}>
-                <div className="max-w-4xl mx-auto px-4 text-center">
-                    <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
-                        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Our <span className="text-yellow-400">Mission</span></h2>
-                        <p className={`text-xl md:text-2xl leading-relaxed italic ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                            "To empower IARE students to craft compelling, trend-setting content, transforming our college's digital footprint through the art of visual storytelling."
-                        </p>
-                    </motion.div>
-                </div>
-            </section>
-
-             <section id="event" className={`py-24 ${isDarkMode ? 'bg-black' : 'bg-gray-900'}`} style={{ perspective: '1200px' }}>
+            
+            <section id="event" className={`py-24 ${isDarkMode ? 'bg-black' : 'bg-gray-900'}`} style={{ perspective: '1200px' }}>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
                         className="text-center mb-16"
@@ -233,14 +222,20 @@ const App = () => {
                                     </ul>
                                 </motion.div>
                                 
-                                <motion.div variants={itemVariants} className="relative bg-black/20 p-6 rounded-xl border border-white/10 hover:border-yellow-400/50 transition-colors duration-300">
+                                <motion.div variants={itemVariants} className="group/declassify relative bg-black/20 p-6 rounded-xl border border-white/10 overflow-hidden">
                                     <h4 className="font-bold text-2xl text-yellow-400 mb-4 flex items-center"><Clock className="w-6 h-6 mr-3" /> Event Structure</h4>
-                                    <div className="space-y-2 text-gray-300">
+                                    <div className="space-y-2 text-gray-400 blur-sm group-hover/declassify:blur-none transition-all duration-500 select-none">
                                         <p><b>Round 1:</b> Frame the Fame <span className="font-mono text-yellow-400/80">[20 Pts]</span></p>
                                         <p><b>Round 2:</b> IARE Trailer Cut <span className="font-mono text-yellow-400/80">[30 Pts]</span></p>
                                         <p><b>Round 3:</b> Ad Blitz <span className="font-mono text-yellow-400/80">[25 Pts]</span></p>
                                         <p><b>Round 4:</b> Idea Hack <span className="font-mono text-yellow-400/80">[15 Pts]</span></p>
                                         <p><b>Round 5:</b> Cut & Create <span className="font-mono text-yellow-400/80">[40 Pts]</span></p>
+                                    </div>
+                                    <div className="absolute inset-0 flex items-center justify-center bg-black/80 opacity-100 group-hover/declassify:opacity-0 transition-opacity duration-500 cursor-pointer">
+                                        <div className="text-center p-4 border-2 border-dashed border-yellow-400/50 rounded-lg">
+                                            <p className="font-bold text-xl text-yellow-400 tracking-widest">CONFIDENTIAL</p>
+                                            <p className="text-lg font-semibold text-white mt-1">HOVER TO REVEAL</p>
+                                        </div>
                                     </div>
                                 </motion.div>
                             </motion.div>
@@ -248,8 +243,47 @@ const App = () => {
                     </motion.div>
                 </div>
             </section>
-            
 
+            <section className={`py-24 ${isDarkMode ? 'bg-gray-900/50' : 'bg-white'}`}>
+                <div className="max-w-4xl mx-auto px-4 text-center">
+                    <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+                        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Our <span className="text-yellow-400">Mission</span></h2>
+                        <p className={`text-xl md:text-2xl leading-relaxed italic ${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+                            "To empower IARE students to craft compelling, trend-setting content, transforming our college's digital footprint through the art of visual storytelling."
+                        </p>
+                    </motion.div>
+                </div>
+            </section>
+
+            <section id="projects" className={`py-24 ${isDarkMode ? 'bg-black' : 'bg-gray-50'}`}>
+                <div className="max-w-7xl mx-auto px-4">
+                    <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
+                        <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'}`}>Featured <span className="text-yellow-400">Reels</span></h2>
+                        <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'}`}>A glimpse into our creative world.</p>
+                    </motion.div>
+                    <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
+                        {featuredReels.map((reel) => (
+                            <motion.a key={reel.id} href={reel.link} target="_blank" rel="noopener noreferrer" className="relative block group overflow-hidden rounded-2xl shadow-lg transition-shadow duration-300 hover:shadow-[0_0_30px_5px_rgba(234,179,8,0.3)]" variants={itemVariants} whileHover={{ scale: 1.05, zIndex: 10, y: -8 }} transition={{ duration: 0.3 }}>
+                                <img src={reel.thumbnail} alt={reel.title} className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    <div className="bg-yellow-400 text-black p-5 rounded-full shadow-lg shadow-yellow-400/50 transform transition-transform group-hover:scale-110">
+                                        <Play size={32} />
+                                    </div>
+                                </div>
+                                <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
+                                    <h3 className="text-xl font-bold mb-2 truncate transition-transform duration-300 group-hover:-translate-y-1">{reel.title}</h3>
+                                    <div className="flex justify-between text-sm text-gray-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                        <span>{reel.views} views</span>
+                                        <span>{reel.likes} likes</span>
+                                    </div>
+                                </div>
+                            </motion.a>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+            
             <section className={`py-24 ${isDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
                 <div className="max-w-7xl mx-auto px-4">
                     <motion.div className="text-center mb-16" initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.5 }} transition={{ duration: 0.8 }}>
