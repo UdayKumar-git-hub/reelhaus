@@ -83,102 +83,121 @@ const App = () => {
     setFormData(prevState => ({ ...prevState, paymentScreenshot: file }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (isSubmitting) return;
 
-    setIsSubmitting(true);
-    setSubmitMessage('Submitting, please wait...');
-    setFileError('');
+  setIsSubmitting(true);
+  setSubmitMessage('Submitting, please wait...');
+  setFileError('');
 
-    try {
-      const { data: existingTx, error: txError } = await supabase
-        .from('creator_feast_registrations')
-        .select('transaction_id')
-        .eq('transaction_id', formData.transactionId)
-        .maybeSingle();
+  try {
+    // 1️⃣ Check if transaction ID already exists
+    const { data: existingTx, error: txError } = await supabase
+      .from('creator_feast_registrations')
+      .select('transaction_id')
+      .eq('transaction_id', formData.transactionId)
+      .maybeSingle();
 
-      if (txError) throw txError;
-      if (existingTx) {
-        throw new Error("This Transaction ID has already been used.");
-      }
+    if (txError) throw txError;
+    if (existingTx) throw new Error("This Transaction ID has already been used.");
 
-      let screenshot_url = null;
-      if (formData.paymentScreenshot) {
-        const file = formData.paymentScreenshot;
-        const fileName = `${Date.now()}-${file.name}`;
-        
-        const { error: uploadError } = await supabase.storage
-          .from('payment-screenshots')
-          .upload(fileName, file);
+    // 2️⃣ Upload screenshot if available
+    let screenshot_url = null;
+    if (formData.paymentScreenshot) {
+      const file = formData.paymentScreenshot;
+      const fileName = `${Date.now()}-${file.name}`;
 
-        if (uploadError) throw uploadError;
+      const { error: uploadError } = await supabase.storage
+        .from('payment-screenshots')
+        .upload(fileName, file);
 
-        const { data: urlData } = supabase.storage
-          .from('payment-screenshots')
-          .getPublicUrl(fileName);
-        screenshot_url = urlData.publicUrl;
-      }
+      if (uploadError) throw uploadError;
 
-      const leaderName = formData.teamLeader === 'you' 
-        ? formData.fullName 
-        : formData.teamMembers[parseInt(formData.teamLeader, 10)]?.name;
-      const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
-      const fullTeam = [{name: formData.fullName, roll: formData.rollNumber}, ...formData.teamMembers];
+      const { data: urlData } = supabase.storage
+        .from('payment-screenshots')
+        .getPublicUrl(fileName);
 
-      const { data: insertData, error: insertError } = await supabase
-        .from('creator_feast_registrations')
-        .insert([{
-          full_name: formData.fullName,
-          roll_number: formData.rollNumber,
-          branch: finalBranch,
-          study_year: formData.year,
-          contact_number: formData.contactNumber,
-          email: formData.email,
-          participation_type: formData.participationType,
-          team_members: fullTeam,
-          team_leader_name: leaderName,
-          team_leader_email: formData.teamLeaderEmail,
-          team_leader_phone: formData.teamLeaderPhone,
-          transaction_id: formData.transactionId,
-          screenshot_url: screenshot_url,
-          has_consented: formData.consent,
-        }])
-        .select();
-
-      if (insertError) throw insertError;
-      
-      if (!insertData || insertData.length === 0) {
-          throw new Error("Data was not saved. Please check Row Level Security (RLS) policies in your Supabase project.");
-      }
-      // Send minimal payload to n8n webhook
-await fetch("https://udaykumar-rh.app.n8n.cloud/webhook-test/creator-feast-registration", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    full_name: formData.fullName,
-    email: formData.email,
-    phone: formData.contactNumber
-  }),
-});
-
-
-      setSubmitMessage('Registration successful! We look forward to seeing you.');
-      setFormData({
-        fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
-        participationType: '', teamMembers: [], teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '',
-        transactionId: '', paymentScreenshot: null, consent: false,
-      });
-      const fileInput = document.getElementById('paymentScreenshot');
-      if (fileInput) fileInput.value = '';
-
-    } catch (error) {
-      setSubmitMessage(`Error: ${error.message || 'Could not submit registration.'}`);
-      console.error("Error submitting to Supabase:", error);
-    } finally {
-      setIsSubmitting(false);
+      screenshot_url = urlData.publicUrl;
     }
-  };
+
+    // 3️⃣ Prepare team data
+    const leaderName = formData.teamLeader === 'you' 
+      ? formData.fullName 
+      : formData.teamMembers[parseInt(formData.teamLeader, 10)]?.name;
+    const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
+    const fullTeam = [{ name: formData.fullName, roll: formData.rollNumber }, ...formData.teamMembers];
+
+    // 4️⃣ Insert into Supabase
+    const { data: insertData, error: insertError } = await supabase
+      .from('creator_feast_registrations')
+      .insert([{
+        full_name: formData.fullName,
+        roll_number: formData.rollNumber,
+        branch: finalBranch,
+        study_year: formData.year,
+        contact_number: formData.contactNumber,
+        email: formData.email,
+        participation_type: formData.participationType,
+        team_members: fullTeam,
+        team_leader_name: leaderName,
+        team_leader_email: formData.teamLeaderEmail,
+        team_leader_phone: formData.teamLeaderPhone,
+        transaction_id: formData.transactionId,
+        screenshot_url: screenshot_url,
+        has_consented: formData.consent,
+      }])
+      .select();
+
+    if (insertError) throw insertError;
+    if (!insertData || insertData.length === 0) {
+      throw new Error("Data was not saved. Check Row Level Security (RLS) policies in Supabase.");
+    }
+
+    // 5️⃣ Send payload to n8n webhook (CORS-safe)
+    try {
+      const webhookResponse = await fetch("https://udaykumar-rh.app.n8n.cloud/webhook-test/creator-feast-registration", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        mode: "cors", // Required for cross-origin requests
+        body: JSON.stringify({
+          full_name: formData.fullName,
+          email: formData.email,
+          phone: formData.contactNumber
+        }),
+      });
+
+      if (!webhookResponse.ok) {
+        const text = await webhookResponse.text();
+        console.warn("n8n webhook warning:", text || webhookResponse.status);
+      }
+
+    } catch (webhookError) {
+      console.warn("Error sending data to n8n webhook:", webhookError);
+      // Do not block user submission
+    }
+
+    // 6️⃣ Reset form and show success message
+    setSubmitMessage('Registration successful! We look forward to seeing you.');
+    setFormData({
+      fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
+      participationType: '', teamMembers: [], teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '',
+      transactionId: '', paymentScreenshot: null, consent: false,
+    });
+    const fileInput = document.getElementById('paymentScreenshot');
+    if (fileInput) fileInput.value = '';
+
+  } catch (error) {
+    setSubmitMessage(`Error: ${error.message || 'Could not submit registration.'}`);
+    console.error("Error submitting registration:", error);
+  } finally {
+    setIsSubmitting(false);
+  }
+};
+
 
   const inputStyles = "w-full p-4 bg-gray-900/50 rounded-lg border border-gray-700 placeholder:text-gray-500 transition-all duration-300 focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 focus:bg-gray-900 outline-none";
   const eventPosterUrl = "https://i.postimg.cc/26Cm8RrV/rh-feast-13-sep.jpg";
