@@ -154,7 +154,7 @@ const App = () => {
                         <motion.div className="flex flex-col sm:flex-row gap-6 justify-center" variants={itemVariants}>
                            <Sparkles>
                                 <motion.a 
-                                    href="/register"
+                                    href="/CreatorFeast"
                                     target="_blank" rel="noopener noreferrer"
                                     className="group festive-button relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(234,179,8,0.6)] hover:shadow-[0_0_45px_rgba(234,179,8,0.8)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
                                     <span className="relative flex items-center"><Award className="w-6 h-6 mr-3" /> Register for Creator Feast</span>
@@ -219,7 +219,7 @@ const App = () => {
                                 </div>
                                 <div className="mt-8 text-center lg:text-left">
                                     <motion.a 
-                                        href="/register"
+                                        href="/CreatorFeast"
                                         target="_blank" rel="noopener noreferrer"
                                         className="group festive-button relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" 
                                         whileHover={{ y: -3 }} 
@@ -335,7 +335,7 @@ const App = () => {
                 </div>
             </footer>
 
-            <style jsx global>{`
+            <style>{`
                 .shimmer-text {
                     background-size: 200% 100%;
                     animation: shimmer 5s linear infinite;
@@ -381,8 +381,8 @@ const App = () => {
                 .festive-button:hover::after {
                   transform: translate(-50%, -50%) scale(20);
                   opacity: 1;
-                   transition: transform 0.6s ease, opacity 0.8s ease;
-                   opacity:0;
+                  transition: transform 0.6s ease, opacity 0.8s ease;
+                  opacity:0;
                 }
                 
                 /* --- Background Effects --- */
@@ -443,3 +443,4 @@ const App = () => {
 };
 
 export default App;
+
