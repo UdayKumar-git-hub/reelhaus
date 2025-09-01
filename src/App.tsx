@@ -14,7 +14,9 @@ import Articles from './pages/Articles';
 import Projects from './pages/Projects';
 import JoinUs from './pages/JoinUs';
 import Contact from './pages/Contact';
-import Hiring from './pages/Hiring'; // This will be your detailed hiring page
+import Hiring from './pages/Hiring';
+import CreatorFeast from ".pages/CreatorFeast"
+// This will be your detailed hiring page
 // import ErrorBoundary from './components/ErrorBoundary'; // Optional: for advanced error handling
 
 function App() {
