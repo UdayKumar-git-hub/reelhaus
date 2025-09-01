@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lucide-react';
 
 // --- CORRECT: Import the client directly from your file ---
-import { supabase } from './supabaseEventClient.js';
+import { supabase } from "../supabaseEventClient.js";
 
 const Loader = () => (
   <svg className="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
