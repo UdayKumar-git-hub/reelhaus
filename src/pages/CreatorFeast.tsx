@@ -151,6 +151,17 @@ const App = () => {
       if (!insertData || insertData.length === 0) {
           throw new Error("Data was not saved. Please check Row Level Security (RLS) policies in your Supabase project.");
       }
+      // Send minimal payload to n8n webhook
+await fetch("https://<your-n8n-domain>/webhook/creator-feast-registration", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    full_name: formData.fullName,
+    email: formData.email,
+    phone: formData.contactNumber
+  }),
+});
+
 
       setSubmitMessage('Registration successful! We look forward to seeing you.');
       setFormData({
@@ -353,15 +364,6 @@ const App = () => {
   );
 };
 
-await fetch("https://<your-n8n-domain>/webhook/creator-feast-registration", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    full_name: name,
-    email: email,
-    phone: phone
-  })
-});
 
 
 export default App;
