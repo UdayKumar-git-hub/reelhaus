@@ -201,6 +201,9 @@ const App = () => {
                                         <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-48 group-hover:h-48"></span>
                                         <span className="relative flex items-center">Book Your Spot <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-2" /></span>
                                     </motion.a>
+                                    <p className="mt-4 text-sm text-yellow-400 drop-shadow-[0_0_8px_rgba(234,179,8,0.7)]">
+                                        Contact: 9392449721 for registration/payment errors or any other issues.
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -222,20 +225,14 @@ const App = () => {
                                     </ul>
                                 </motion.div>
                                 
-                                <motion.div variants={itemVariants} className="group/declassify relative bg-black/20 p-6 rounded-xl border border-white/10 overflow-hidden">
+                                <motion.div variants={itemVariants} className="relative bg-black/20 p-6 rounded-xl border border-white/10 overflow-hidden">
                                     <h4 className="font-bold text-2xl text-yellow-400 mb-4 flex items-center"><Clock className="w-6 h-6 mr-3" /> Event Structure</h4>
-                                    <div className="space-y-2 text-gray-400 blur-sm group-hover/declassify:blur-none transition-all duration-500 select-none">
+                                    <div className="space-y-2 text-gray-400 blur-sm select-none">
                                         <p><b>Round 1:</b> Frame the Fame <span className="font-mono text-yellow-400/80">[20 Pts]</span></p>
                                         <p><b>Round 2:</b> IARE Trailer Cut <span className="font-mono text-yellow-400/80">[30 Pts]</span></p>
                                         <p><b>Round 3:</b> Ad Blitz <span className="font-mono text-yellow-400/80">[25 Pts]</span></p>
                                         <p><b>Round 4:</b> Idea Hack <span className="font-mono text-yellow-400/80">[15 Pts]</span></p>
                                         <p><b>Round 5:</b> Cut & Create <span className="font-mono text-yellow-400/80">[40 Pts]</span></p>
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center bg-black/80 opacity-100 group-hover/declassify:opacity-0 transition-opacity duration-500 cursor-pointer">
-                                        <div className="text-center p-4 border-2 border-dashed border-yellow-400/50 rounded-lg">
-                                            <p className="font-bold text-xl text-yellow-400 tracking-widest">CONFIDENTIAL</p>
-                                            <p className="text-lg font-semibold text-white mt-1">HOVER TO REVEAL</p>
-                                        </div>
                                     </div>
                                 </motion.div>
                             </motion.div>
