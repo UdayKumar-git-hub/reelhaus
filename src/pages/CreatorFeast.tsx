@@ -4,8 +4,7 @@ import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lu
 //import { supabase } from "./supabaseEventClient";
 
 
-// --- Supabase Client Setup ---
-// Safely initialize the client by checking for the global Supabase object.
+
 let supabaseClient;
 if (window.supabase) {
     const { createClient } = window.supabase;
