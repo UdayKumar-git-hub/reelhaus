@@ -40,7 +40,7 @@ const App = () => {
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlycnhjam1ucHRib2xtYm1icWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2MzAxODMsImV4cCI6MjA3MDIwNjE4M30.YlMdd1S6s3--xv-qtuNe9aXBitJtxCo9AG3SkFPVrcU';
         supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
         setIsClientReady(true);
-        return true; // Signal success
+        return true; // Signal succes
       }
       return false; // Signal failure
     };
