@@ -2,6 +2,25 @@ import React from 'react';
 import { Play, Users, Calendar, Instagram, Linkedin, Facebook, TrendingUp, ArrowRight, Target, Scissors, BookOpen, Clock, MapPin, Award } from 'lucide-react';
 import { motion, useInView, animate, useMotionValue, useTransform } from 'framer-motion';
 
+// A reusable component to add a sparkling effect
+const Sparkles = ({ children, className }) => {
+  return (
+    <div className={`relative inline-block ${className}`}>
+      <div className="absolute inset-0 z-20 pointer-events-none sparkle-container">
+        {/* These spans will be the sparkles, animated via CSS */}
+        <span className="sparkle" style={{ top: '10%', left: '-5%' }}></span>
+        <span className="sparkle" style={{ top: '80%', left: '-10%' }}></span>
+        <span className="sparkle" style={{ top: '20%', left: '105%' }}></span>
+        <span className="sparkle" style={{ top: '90%', left: '110%' }}></span>
+        <span className="sparkle" style={{ top: '-15%', left: '50%' }}></span>
+        <span className="sparkle" style={{ top: '115%', left: '40%' }}></span>
+      </div>
+      {children}
+    </div>
+  );
+};
+
+
 // Animated Counter Component
 const CountUp = ({ end, suffix = '' }) => {
     const ref = React.useRef(null);
@@ -94,8 +113,8 @@ const App = () => {
 
             <section className="relative min-h-screen flex items-center justify-center overflow-hidden" onMouseMove={handleHeroMouseMove} onMouseLeave={handleMouseLeave}>
                 <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black"></div>
+                <div className="absolute inset-0 z-0 confetti-bg"></div>
                 
-                 {/* Spotlight Effect */}
                 <motion.div
                     className="pointer-events-none absolute inset-0 z-10"
                     style={{
@@ -107,34 +126,27 @@ const App = () => {
                         transition: 'opacity 0.3s ease-in-out'
                     }}
                 />
-
-                <div className="absolute inset-0 z-0 opacity-20">
-                    <div className="absolute h-full w-full bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)]"></div>
-                </div>
-
-                {/* Animated Orbs */}
-                <div className="absolute inset-0 z-0 overflow-hidden">
-                    <motion.div className="absolute w-64 h-64 bg-yellow-400/20 rounded-full blur-3xl" animate={{ x: [0, 100, 0], y: [0, -150, 0], scale: [1, 1.2, 1] }} transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}></motion.div>
-                    <motion.div className="absolute bottom-0 right-0 w-80 h-80 bg-yellow-500/20 rounded-full blur-3xl" animate={{ x: [0, -120, 0], y: [0, 80, 0], scale: [1.1, 0.9, 1.1] }} transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}></motion.div>
-                </div>
-
-
+                
                 <div className="relative z-20 max-w-5xl mx-auto px-4 text-center">
                     <motion.div variants={containerVariants} initial="hidden" animate="visible">
-                        <motion.h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.7)]" variants={itemVariants}>
-                            ReelHaus IARE
-                        </motion.h1>
+                        <Sparkles>
+                             <motion.h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.7)] shimmer-text" variants={itemVariants}>
+                                ReelHaus IARE
+                            </motion.h1>
+                        </Sparkles>
                         <motion.p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-gray-300" variants={itemVariants}>
                             Elevating IARE's social presence through the lens of <span className="text-yellow-400 font-semibold">photography, filmmaking, and viral reel creation</span>.
                         </motion.p>
                         <motion.div className="flex flex-col sm:flex-row gap-6 justify-center" variants={itemVariants}>
-                            <motion.a 
-                                href="/register"
-                                target="_blank" rel="noopener noreferrer"
-                                className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(234,179,8,0.6)] hover:shadow-[0_0_45px_rgba(234,179,8,0.8)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
-                                <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-48 group-hover:h-48"></span>
-                                <span className="relative flex items-center"><Award className="w-6 h-6 mr-3" /> Register for Creator Feast</span>
-                            </motion.a>
+                           <Sparkles>
+                                <motion.a 
+                                    href="/register"
+                                    target="_blank" rel="noopener noreferrer"
+                                    className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(234,179,8,0.6)] hover:shadow-[0_0_45px_rgba(234,179,8,0.8)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
+                                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-48 group-hover:h-48"></span>
+                                    <span className="relative flex items-center"><Award className="w-6 h-6 mr-3" /> Register for Creator Feast</span>
+                                </motion.a>
+                           </Sparkles>
                             <motion.a 
                                 href="https://instagram.com/reelhaus.hyd" 
                                 target="_blank" 
@@ -176,12 +188,14 @@ const App = () => {
                         
                         <div className="relative p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
                             <motion.div className="lg:col-span-2" initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }}>
-                               <img src={eventPosterUrl} alt="ReelHaus Creator Feast Poster" className="rounded-2xl shadow-2xl shadow-yellow-400/20 w-full border-4 border-yellow-400/30 transition-all duration-300 group-hover:scale-105 group-hover:shadow-yellow-400/40" />
+                               <Sparkles>
+                                    <img src={eventPosterUrl} alt="ReelHaus Creator Feast Poster" className="rounded-2xl shadow-2xl shadow-yellow-400/20 w-full border-4 border-yellow-400/30 transition-all duration-300 group-hover:scale-105 group-hover:shadow-yellow-400/40" />
+                               </Sparkles>
                             </motion.div>
                             
                             <div className="lg:col-span-3">
                                 <div className="text-center lg:text-left">
-                                    <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500">ReelHaus Creator Feast</h3>
+                                    <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 shimmer-text">ReelHaus Creator Feast</h3>
                                     <p className="mt-4 text-xl text-gray-300 max-w-3xl">A full-day creative showdown to empower students in the art of short-form content.</p>
                                 </div>
 
@@ -315,6 +329,70 @@ const App = () => {
                     50% { transform: translate(20%, 20%) rotate(180deg); }
                     100% { transform: translate(-20%, -20%) rotate(360deg); }
                 }
+                
+                .shimmer-text {
+                    background-size: 200% 100%;
+                    animation: shimmer 5s linear infinite;
+                }
+
+                @keyframes shimmer {
+                    0% { background-position: 200% 0; }
+                    100% { background-position: -200% 0; }
+                }
+
+                .sparkle {
+                  position: absolute;
+                  width: 6px;
+                  height: 6px;
+                  background: white;
+                  border-radius: 50%;
+                  box-shadow: 0 0 10px 2px #fff, 0 0 20px 5px #fde047;
+                  animation: sparkle-anim 2s infinite ease-out;
+                  opacity: 0;
+                }
+
+                .sparkle:nth-child(2) { animation-delay: 0.3s; }
+                .sparkle:nth-child(3) { animation-delay: 0.7s; }
+                .sparkle:nth-child(4) { animation-delay: 1.2s; }
+                .sparkle:nth-child(5) { animation-delay: 1.5s; }
+                .sparkle:nth-child(6) { animation-delay: 1.8s; }
+
+                @keyframes sparkle-anim {
+                  0% { transform: scale(0); opacity: 0; }
+                  50% { transform: scale(1.2); opacity: 1; }
+                  100% { transform: scale(0); opacity: 0; }
+                }
+                
+                .confetti-bg {
+                  height: 100%;
+                  width: 100%;
+                  background: transparent;
+                  overflow: hidden;
+                }
+                
+                .confetti-bg::before {
+                  content: '';
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 10px;
+                  height: 10px;
+                  background: #fde047;
+                  opacity: 0.7;
+                  animation: confetti-fall 20s linear infinite;
+                  box-shadow: 
+                    20vw 15vh 0 2px #facc15, 40vw 30vh 0 3px #fde047,
+                    60vw 45vh 0 2px #facc15, 80vw 60vh 0 3px #fde047,
+                    -10vw 75vh 0 2px #facc15, 30vw 90vh 0 3px #fde047,
+                    50vw -10vh 0 2px #facc15, 70vw 5vh 0 3px #fde047,
+                    90vw 20vh 0 2px #facc15, 10vw 40vh 0 3px #fde047;
+                }
+
+                @keyframes confetti-fall {
+                  0% { transform: translateY(-10vh) rotate(0deg); }
+                  100% { transform: translateY(110vh) rotate(360deg); }
+                }
+
             `}</style>
         </div>
     );
