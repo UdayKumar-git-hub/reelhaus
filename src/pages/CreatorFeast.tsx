@@ -152,7 +152,7 @@ const App = () => {
           throw new Error("Data was not saved. Please check Row Level Security (RLS) policies in your Supabase project.");
       }
       // Send minimal payload to n8n webhook
-await fetch("https://<your-n8n-domain>/webhook/creator-feast-registration", {
+await fetch("https://udaykumar-rh.app.n8n.cloud/webhook-test/creator-feast-registration", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
