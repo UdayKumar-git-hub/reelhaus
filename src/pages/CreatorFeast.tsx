@@ -10,7 +10,7 @@ if (window.supabase) {
 
     // IMPORTANT: Replace these placeholder values with the actual URL and Anon Key 
     // from your "ReelHaus Events" Supabase project.
-    const supabaseUrl = 'https://yrrxcjmnptbolmbmbqkw.supabase.co'; 
+    const supabaseUrl = 'https://iklwclewqvzblrgnbhfp.supabase.co'; 
     const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlycnhjam1ucHRib2xtYm1icWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2MzAxODMsImV4cCI6MjA3MDIwNjE4M30.YlMdd1S6s3--xv-qtuNe9aXBitJtxCo9AG3SkFPVrcU';
 
     supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
