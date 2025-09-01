@@ -28,16 +28,16 @@ const App = () => {
   const branches = ["CSE", "AIML", "IT", "ECE", "EEE", "Mechanical", "Civil", "Other"];
   const years = ["1st Year", "2nd Year", "3rd Year", "4th Year"];
   const participationOptions = [
-    { value: "Individual", label: "Individual (₹9)" },
-    { value: "Team of 2", label: "Team of 2 (₹15)" },
-    { value: "Team of 3", label: "Team of 3 (₹25)" },
+    { value: "Individual", label: "Individual (₹9)", amount: 9 },
+    { value: "Team of 2", label: "Team of 2 (₹15)", amount: 15 },
+    { value: "Team of 3", label: "Team of 3 (₹25)", amount: 25 },
   ];
 
   // Effect to update team members array when participation type changes
   useEffect(() => {
     let memberCount = 0;
-    if (formData.participationType === 'Team of 2') memberCount = 2;
-    if (formData.participationType === 'Team of 3') memberCount = 3;
+    if (formData.participationType === 'Team of 2') memberCount = 1; // You register, so 1 more member
+    if (formData.participationType === 'Team of 3') memberCount = 2; // You register, so 2 more members
     
     // Create new array with the correct number of empty member objects
     const newTeamMembers = Array.from({ length: memberCount }, () => ({ name: '', roll: '' }));
@@ -48,7 +48,6 @@ const App = () => {
       teamLeader: '', // Reset leader on change
     }));
   }, [formData.participationType]);
-
 
   const formContainerVariants = {
     hidden: { opacity: 0 },
@@ -109,6 +108,10 @@ const App = () => {
 
   const inputStyles = "w-full p-4 bg-gray-900/50 rounded-lg border border-gray-700 placeholder:text-gray-500 transition-all duration-300 focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 focus:bg-gray-900 outline-none";
   const eventPosterUrl = "https://i.postimg.cc/26Cm8RrV/rh-feast-13-sep.jpg";
+  const qrCodeUrl = "https://i.postimg.cc/g0Fz8M46/Whats-App-Image-2025-09-01-at-15-08-27-8699489e.jpg";
+  
+  // Find the payment amount based on selection
+  const paymentAmount = participationOptions.find(opt => opt.value === formData.participationType)?.amount || 0;
 
   return (
     <div className="min-h-screen bg-black text-gray-200 font-sans">
@@ -208,8 +211,8 @@ const App = () => {
                     <h3 className="text-lg font-semibold text-white">Team Member Details</h3>
                     {formData.teamMembers.map((member, index) => (
                        <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                           <input type="text" value={member.name} onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)} placeholder={`Team Member ${index + 1} Name*`} required className={inputStyles} />
-                           <input type="text" value={member.roll} onChange={(e) => handleTeamMemberChange(index, 'roll', e.target.value)} placeholder={`Member ${index + 1} Roll No.*`} required className={inputStyles} />
+                           <input type="text" value={member.name} onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)} placeholder={`Team Member ${index + 2} Name*`} required className={inputStyles} />
+                           <input type="text" value={member.roll} onChange={(e) => handleTeamMemberChange(index, 'roll', e.target.value)} placeholder={`Member ${index + 2} Roll No.*`} required className={inputStyles} />
                        </div>
                     ))}
                     <div className="relative">
@@ -226,15 +229,36 @@ const App = () => {
               )}
             </AnimatePresence>
 
-            <motion.div variants={formItemVariants} className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20">
-              <h3 className="text-lg font-semibold text-white">Payment Details (UPI Only)</h3>
-              <input type="text" name="transactionId" value={formData.transactionId} onChange={handleChange} placeholder="Transaction ID*" required className={inputStyles} />
-              <div>
-                <label htmlFor="paymentScreenshot" className="block text-lg font-semibold text-white mb-4">Upload Screenshot* (max 5MB)</label>
-                <input type="file" id="paymentScreenshot" name="paymentScreenshot" onChange={handleFileChange} accept="image/png, image/jpeg, image/jpg" required className="w-full text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-500 cursor-pointer" />
-                {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
-              </div>
-            </motion.div>
+            {/* START: Updated Payment Section */}
+            <AnimatePresence>
+              {paymentAmount > 0 && (
+                <motion.div 
+                  variants={formItemVariants} 
+                  initial="hidden" 
+                  animate="visible" 
+                  exit="hidden" 
+                  className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20"
+                >
+                  <h3 className="text-xl font-semibold text-white">Payment Details (UPI Only)</h3>
+                  <div className="flex flex-col md:flex-row items-center gap-8">
+                    <div className="text-center">
+                        <img src={qrCodeUrl} alt="Payment QR Code" className="w-48 h-48 rounded-lg mx-auto border-2 border-gray-700"/>
+                        <p className="mt-2 text-yellow-400 font-bold text-2xl">Pay: ₹{paymentAmount}</p>
+                    </div>
+                    <div className="w-full space-y-6">
+                      <p className='text-gray-400'>1. Scan the QR code to complete the payment. <br/> 2. Enter the Transaction ID below and upload a screenshot.</p>
+                      <input type="text" name="transactionId" value={formData.transactionId} onChange={handleChange} placeholder="Transaction ID*" required className={inputStyles} />
+                      <div>
+                        <label htmlFor="paymentScreenshot" className="block text-md text-white mb-2">Upload Screenshot* (max 5MB)</label>
+                        <input type="file" id="paymentScreenshot" name="paymentScreenshot" onChange={handleFileChange} accept="image/png, image/jpeg, image/jpg" required className="w-full text-gray-400 file:mr-4 file:py-3 file:px-6 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-yellow-400 file:text-black hover:file:bg-yellow-500 cursor-pointer" />
+                        {fileError && <p className="text-red-500 text-sm mt-2">{fileError}</p>}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+            {/* END: Updated Payment Section */}
             
             <motion.div variants={formItemVariants}>
               <label className="flex items-start gap-3 text-base cursor-pointer">
