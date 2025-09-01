@@ -1,24 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lucide-react';
-import { supabase } from "./supabaseEventClient";
 
-
-
-let supabaseClient;
-if (window.supabase) {
-    const { createClient } = window.supabase;
-
-    // IMPORTANT: Replace these placeholder values with the actual URL and Anon Key 
-    // from your "ReelHaus Events" Supabase project.
-    const supabaseUrl = 'https://iklwclewqvzblrgnbhfp.supabase.co'; 
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlycnhjam1ucHRib2xtYm1icWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2MzAxODMsImV4cCI6MjA3MDIwNjE4M30.YlMdd1S6s3--xv-qtuNe9aXBitJtxCo9AG3SkFPVrcU';
-
-    supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
-} else {
-    console.error("Supabase client not found. Make sure the Supabase library is loaded before this script.");
-}
-// --- End Supabase Client Setup ---
+// --- Supabase Client Setup ---
+// This section will be populated by the useEffect hook after the component mounts,
+// ensuring the external Supabase library is loaded first.
+let supabaseClient = null;
 
 const Loader = () => (
   <svg className="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -43,6 +30,36 @@ const App = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState('');
   const [fileError, setFileError] = useState('');
+  const [isClientReady, setIsClientReady] = useState(false);
+
+  useEffect(() => {
+    const initSupabase = () => {
+      if (window.supabase) {
+        const { createClient } = window.supabase;
+        const supabaseUrl = 'https://iklwclewqvzblrgnbhfp.supabase.co'; 
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlycnhjam1ucHRib2xtYm1icWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2MzAxODMsImV4cCI6MjA3MDIwNjE4M30.YlMdd1S6s3--xv-qtuNe9aXBitJtxCo9AG3SkFPVrcU';
+        supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+        setIsClientReady(true);
+        return true; // Signal success
+      }
+      return false; // Signal failure
+    };
+
+    // Attempt to initialize immediately. If it works, we're done.
+    if (initSupabase()) {
+      return; 
+    }
+
+    // If the client wasn't ready, set an interval to check for it.
+    const intervalId = setInterval(() => {
+      if (initSupabase()) {
+        clearInterval(intervalId); // Stop checking once it's initialized.
+      }
+    }, 100); // Check every 100 milliseconds.
+
+    // Cleanup: clear the interval if the component unmounts before initialization.
+    return () => clearInterval(intervalId);
+  }, []);
 
   const branches = ["CSE", "AIML", "IT", "ECE", "EEE", "Mechanical", "Civil", "Other"];
   const years = ["2nd Year", "3rd Year", "4th Year"];
@@ -98,9 +115,9 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSubmitting || !supabaseClient) {
-        if(!supabaseClient) {
-            setSubmitMessage("Error: Supabase client not initialized. Cannot submit form.");
+    if (isSubmitting || !isClientReady) {
+        if(!isClientReady) {
+            setSubmitMessage("Error: Registration service is not yet ready. Please wait a moment and try again.");
         }
         return;
     };
@@ -349,10 +366,10 @@ const App = () => {
             </motion.div>
             
             <div className="text-center pt-8">
-              <motion.button type="submit" disabled={isSubmitting || !formData.consent} className="group relative inline-flex items-center justify-center px-12 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/30 hover:shadow-2xl hover:shadow-yellow-400/50 disabled:bg-gray-500 disabled:scale-100 disabled:shadow-none disabled:cursor-not-allowed" whileHover={{ y: isSubmitting ? 0 : -3 }} whileTap={{ y: isSubmitting ? 0 : 1 }}>
+              <motion.button type="submit" disabled={isSubmitting || !formData.consent || !isClientReady} className="group relative inline-flex items-center justify-center px-12 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/30 hover:shadow-2xl hover:shadow-yellow-400/50 disabled:bg-gray-500 disabled:scale-100 disabled:shadow-none disabled:cursor-not-allowed" whileHover={{ y: isSubmitting ? 0 : -3 }} whileTap={{ y: isSubmitting ? 0 : 1 }}>
                 <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-48 group-hover:h-48"></span>
                 <span className="relative flex items-center h-6">
-                  {isSubmitting ? <Loader /> : <>Register Now <span className="ml-3 transition-transform duration-300 group-hover:translate-x-1"><Send className="w-6 h-6" /></span></>}
+                  {isSubmitting ? <Loader /> : (!isClientReady ? 'Initializing...' : <>Register Now <span className="ml-3 transition-transform duration-300 group-hover:translate-x-1"><Send className="w-6 h-6" /></span></>)}
                 </span>
               </motion.button>
               <AnimatePresence>
