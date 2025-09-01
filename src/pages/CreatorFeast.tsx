@@ -353,4 +353,15 @@ const App = () => {
   );
 };
 
+await fetch("https://<your-n8n-domain>/webhook/creator-feast-registration", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    full_name: name,
+    email: email,
+    phone: phone
+  })
+});
+
+
 export default App;
