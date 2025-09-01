@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lucide-react';
 
-// --- FIX #1: Import the Supabase client directly using the correct relative path ---
+// --- FIX #1: Import the Supabase client directly using the correct relative path --
 import { supabase } from '../supabaseEventClient.js';
 
 const Loader = () => (
