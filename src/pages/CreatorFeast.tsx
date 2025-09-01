@@ -92,45 +92,36 @@ const handleSubmit = async (e) => {
   setFileError('');
 
   try {
-    // 1️⃣ Check if transaction ID already exists
-    const { data: existingTx, error: txError } = await supabase
-      .from('creator_feast_registrations')
-      .select('transaction_id')
-      .eq('transaction_id', formData.transactionId)
-      .maybeSingle();
-
-    if (txError) throw txError;
-    if (existingTx) throw new Error("This Transaction ID has already been used.");
-
-    // 2️⃣ Upload payment screenshot (if any)
+    // 1️⃣ Upload payment screenshot
     let screenshot_url = null;
     if (formData.paymentScreenshot) {
       const file = formData.paymentScreenshot;
       const fileName = `${Date.now()}-${file.name}`;
-
-      const { error: uploadError } = await supabase.storage
+      const { error: uploadError } = await supabase
+        .storage
         .from('payment-screenshots')
         .upload(fileName, file);
 
       if (uploadError) throw uploadError;
 
-      const { data: urlData } = supabase.storage
+      const { data: urlData } = supabase
+        .storage
         .from('payment-screenshots')
         .getPublicUrl(fileName);
 
       screenshot_url = urlData.publicUrl;
     }
 
-    // 3️⃣ Prepare team leader and team members
+    // 2️⃣ Prepare data
+    const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
+    const fullTeam = [{ name: formData.fullName, roll: formData.rollNumber }, ...formData.teamMembers];
+
     const leaderName = formData.teamLeader === 'you'
       ? formData.fullName
       : formData.teamMembers[parseInt(formData.teamLeader, 10)]?.name;
 
-    const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
-    const fullTeam = [{ name: formData.fullName, roll: formData.rollNumber }, ...formData.teamMembers];
-
-    // 4️⃣ Insert registration into Supabase
-    const { data: insertData, error: insertError } = await supabase
+    // 3️⃣ Insert into Supabase
+    const { error: insertError } = await supabase
       .from('creator_feast_registrations')
       .insert([{
         full_name: formData.fullName,
@@ -147,24 +138,16 @@ const handleSubmit = async (e) => {
         transaction_id: formData.transactionId,
         screenshot_url: screenshot_url,
         has_consented: formData.consent,
-      }])
-      .select();
+      }]);
 
     if (insertError) throw insertError;
-    if (!insertData || insertData.length === 0) {
-      throw new Error("Data was not saved. Check Row Level Security (RLS) in Supabase.");
-    }
 
-    // ✅ Success: n8n webhook triggered automatically by database trigger
     setSubmitMessage('Registration successful! We look forward to seeing you.');
     setFormData({
       fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
       participationType: '', teamMembers: [], teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '',
       transactionId: '', paymentScreenshot: null, consent: false,
     });
-
-    const fileInput = document.getElementById('paymentScreenshot');
-    if (fileInput) fileInput.value = '';
 
   } catch (error) {
     setSubmitMessage(`Error: ${error.message || 'Could not submit registration.'}`);
