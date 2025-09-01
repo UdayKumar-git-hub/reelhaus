@@ -36,16 +36,15 @@ const App = () => {
   // Effect to update team members array when participation type changes
   useEffect(() => {
     let memberCount = 0;
-    if (formData.participationType === 'Team of 2') memberCount = 1; // You register, so 1 more member
-    if (formData.participationType === 'Team of 3') memberCount = 2; // You register, so 2 more members
+    if (formData.participationType === 'Team of 2') memberCount = 1;
+    if (formData.participationType === 'Team of 3') memberCount = 2;
     
-    // Create new array with the correct number of empty member objects
     const newTeamMembers = Array.from({ length: memberCount }, () => ({ name: '', roll: '' }));
 
     setFormData(prev => ({
       ...prev,
       teamMembers: newTeamMembers,
-      teamLeader: '', // Reset leader on change
+      teamLeader: '',
     }));
   }, [formData.participationType]);
 
@@ -88,7 +87,6 @@ const App = () => {
     setSubmitMessage('');
     setFileError('');
     try {
-      // Simulate form submission
       console.log("Submitting Form Data:", formData);
       await new Promise(resolve => setTimeout(resolve, 2000));
       setSubmitMessage('Registration successful! We look forward to seeing you.');
@@ -110,7 +108,6 @@ const App = () => {
   const eventPosterUrl = "https://i.postimg.cc/26Cm8RrV/rh-feast-13-sep.jpg";
   const qrCodeUrl = "https://i.postimg.cc/g0Fz8M46/Whats-App-Image-2025-09-01-at-15-08-27-8699489e.jpg";
   
-  // Find the payment amount based on selection
   const paymentAmount = participationOptions.find(opt => opt.value === formData.participationType)?.amount || 0;
 
   return (
@@ -118,11 +115,7 @@ const App = () => {
       <section className="relative py-20 md:py-32 bg-gradient-to-b from-gray-900 via-black to-black overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_50%,transparent_100%)]"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
             <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.5)]">
               ReelHaus Creator Feast
             </h1>
@@ -141,12 +134,7 @@ const App = () => {
               </ul>
             </div>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            className="flex justify-center"
-          >
+          <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }} className="flex justify-center">
             <img src={eventPosterUrl} alt="ReelHaus Creator Feast Poster" className="rounded-2xl shadow-2xl shadow-yellow-400/20 w-full max-w-sm border-4 border-yellow-400/30" />
           </motion.div>
         </div>
@@ -190,6 +178,16 @@ const App = () => {
               <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email ID*" required className={inputStyles} />
             </motion.div>
             
+            {/* START: Added confirmation message note */}
+            <motion.div variants={formItemVariants} className="-mt-4 text-center">
+                <div className="inline-block bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                    <p className="text-sm text-yellow-300">
+                        Your confirmation message and event ticket will be sent to this phone number and email address.
+                    </p>
+                </div>
+            </motion.div>
+            {/* END: Added confirmation message note */}
+            
             <motion.div variants={formItemVariants}>
               <label className="block text-lg font-semibold text-white mb-4">Participation Type*</label>
               <div className="flex flex-col md:flex-row gap-4 md:gap-8">
@@ -229,20 +227,13 @@ const App = () => {
               )}
             </AnimatePresence>
 
-            {/* START: Updated Payment Section */}
             <AnimatePresence>
               {paymentAmount > 0 && (
-                <motion.div 
-                  variants={formItemVariants} 
-                  initial="hidden" 
-                  animate="visible" 
-                  exit="hidden" 
-                  className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20"
-                >
+                <motion.div variants={formItemVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20">
                   <h3 className="text-xl font-semibold text-white">Payment Details (UPI Only)</h3>
                   <div className="flex flex-col md:flex-row items-center gap-8">
                     <div className="text-center">
-                        <img src={qrCodeUrl} alt="Payment QR Code" className="w-64 h-64 rounded-lg mx-auto border-2 border-gray-700"/> {/* Increased size */}
+                        <img src={qrCodeUrl} alt="Payment QR Code" className="w-64 h-64 rounded-lg mx-auto border-2 border-gray-700"/>
                         <p className="mt-2 text-yellow-400 font-bold text-2xl">Pay: ₹{paymentAmount}</p>
                     </div>
                     <div className="w-full space-y-6">
@@ -258,7 +249,6 @@ const App = () => {
                 </motion.div>
               )}
             </AnimatePresence>
-            {/* END: Updated Payment Section */}
             
             <motion.div variants={formItemVariants}>
               <label className="flex items-start gap-3 text-base cursor-pointer">
@@ -293,3 +283,4 @@ const App = () => {
 };
 
 export default App;
+
