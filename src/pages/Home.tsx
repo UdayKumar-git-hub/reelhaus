@@ -14,6 +14,8 @@ const Sparkles = ({ children, className }) => {
         <span className="sparkle" style={{ top: '90%', left: '110%' }}></span>
         <span className="sparkle" style={{ top: '-15%', left: '50%' }}></span>
         <span className="sparkle" style={{ top: '115%', left: '40%' }}></span>
+        <span className="sparkle" style={{ top: '50%', left: '-20%' }}></span>
+        <span className="sparkle" style={{ top: '30%', left: '120%' }}></span>
       </div>
       {children}
     </div>
@@ -113,14 +115,22 @@ const App = () => {
 
             <section className="relative min-h-screen flex items-center justify-center overflow-hidden" onMouseMove={handleHeroMouseMove} onMouseLeave={handleMouseLeave}>
                 <div className="absolute inset-0 bg-gradient-to-b from-black via-gray-900 to-black"></div>
-                <div className="absolute inset-0 z-0 confetti-bg"></div>
+                
+                {/* Festive Background Effects */}
+                <div className="absolute inset-0 z-0 pointer-events-none">
+                  <div className="shooting-star"></div>
+                  <div className="shooting-star"></div>
+                  <div className="shooting-star"></div>
+                  <div className="fairy-lights"></div>
+                  <div className="confetti-bg"></div>
+                </div>
                 
                 <motion.div
                     className="pointer-events-none absolute inset-0 z-10"
                     style={{
                         background: useTransform(
                             [mouseX, mouseY],
-                            ([x, y]) => `radial-gradient(400px at ${x}px ${y}px, rgba(234, 179, 8, 0.15), transparent 80%)`
+                            ([x, y]) => `radial-gradient(400px at ${x}px ${y}px, rgba(234, 179, 8, 0.2), transparent 80%)`
                         ),
                         opacity: spotlightOpacity,
                         transition: 'opacity 0.3s ease-in-out'
@@ -130,7 +140,11 @@ const App = () => {
                 <div className="relative z-20 max-w-5xl mx-auto px-4 text-center">
                     <motion.div variants={containerVariants} initial="hidden" animate="visible">
                         <Sparkles>
-                             <motion.h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.7)] shimmer-text" variants={itemVariants}>
+                             <motion.h1 
+                                className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 shimmer-text"
+                                style={{ filter: 'drop-shadow(0 0 25px rgba(234, 179, 8, 0.8))' }}
+                                variants={itemVariants}
+                             >
                                 ReelHaus IARE
                             </motion.h1>
                         </Sparkles>
@@ -142,8 +156,7 @@ const App = () => {
                                 <motion.a 
                                     href="/register"
                                     target="_blank" rel="noopener noreferrer"
-                                    className="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(234,179,8,0.6)] hover:shadow-[0_0_45px_rgba(234,179,8,0.8)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
-                                    <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-48 group-hover:h-48"></span>
+                                    className="group festive-button relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-[0_0_25px_rgba(234,179,8,0.6)] hover:shadow-[0_0_45px_rgba(234,179,8,0.8)]" whileHover={{ y: -3 }} whileTap={{ y: 1 }}>
                                     <span className="relative flex items-center"><Award className="w-6 h-6 mr-3" /> Register for Creator Feast</span>
                                 </motion.a>
                            </Sparkles>
@@ -208,11 +221,10 @@ const App = () => {
                                     <motion.a 
                                         href="/register"
                                         target="_blank" rel="noopener noreferrer"
-                                        className="group relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" 
+                                        className="group festive-button relative inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-black bg-yellow-400 rounded-full overflow-hidden transition-all duration-300 transform hover:scale-105 shadow-xl shadow-yellow-400/40 hover:shadow-2xl hover:shadow-yellow-400/60" 
                                         whileHover={{ y: -3 }} 
                                         whileTap={{ y: 1 }}
                                     >
-                                        <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white/30 rounded-full group-hover:w-48 group-hover:h-48"></span>
                                         <span className="relative flex items-center">Book Your Spot <ArrowRight className="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-2" /></span>
                                     </motion.a>
                                     <p className="mt-4 text-sm text-yellow-400 drop-shadow-[0_0_8px_rgba(234,179,8,0.7)]">
@@ -274,7 +286,7 @@ const App = () => {
                     </motion.div>
                     <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8" variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
                         {featuredReels.map((reel) => (
-                            <motion.a key={reel.id} href={reel.link} target="_blank" rel="noopener noreferrer" className="relative block group overflow-hidden rounded-2xl shadow-lg transition-shadow duration-300 hover:shadow-[0_0_30px_5px_rgba(234,179,8,0.3)]" variants={itemVariants} whileHover={{ scale: 1.05, zIndex: 10, y: -8 }} transition={{ duration: 0.3 }}>
+                            <motion.a key={reel.id} href={reel.link} target="_blank" rel="noopener noreferrer" className="relative block group overflow-hidden rounded-2xl shadow-lg transition-shadow duration-300 hover:shadow-[0_0_30px_5px_rgba(234,179,8,0.4)]" variants={itemVariants} whileHover={{ scale: 1.05, zIndex: 10, y: -8 }} transition={{ duration: 0.3 }}>
                                 <img src={reel.thumbnail} alt={reel.title} className="w-full h-96 object-cover transition-transform duration-500 group-hover:scale-110" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -324,75 +336,107 @@ const App = () => {
             </footer>
 
             <style jsx global>{`
-                @keyframes aurora {
-                    0% { transform: translate(-20%, -20%) rotate(0deg); }
-                    50% { transform: translate(20%, 20%) rotate(180deg); }
-                    100% { transform: translate(-20%, -20%) rotate(360deg); }
-                }
-                
                 .shimmer-text {
                     background-size: 200% 100%;
                     animation: shimmer 5s linear infinite;
                 }
-
                 @keyframes shimmer {
                     0% { background-position: 200% 0; }
                     100% { background-position: -200% 0; }
                 }
 
+                /* --- Sparkle Effect --- */
                 .sparkle {
                   position: absolute;
-                  width: 6px;
-                  height: 6px;
-                  background: white;
-                  border-radius: 50%;
-                  box-shadow: 0 0 10px 2px #fff, 0 0 20px 5px #fde047;
+                  width: 8px; height: 8px;
+                  background: white; border-radius: 50%;
+                  box-shadow: 0 0 10px 2px #fff, 0 0 20px 5px #fde047, 0 0 30px 10px #facc15;
                   animation: sparkle-anim 2s infinite ease-out;
                   opacity: 0;
                 }
-
-                .sparkle:nth-child(2) { animation-delay: 0.3s; }
+                .sparkle:nth-child(2) { animation-delay: 0.3s; width: 5px; height: 5px; }
                 .sparkle:nth-child(3) { animation-delay: 0.7s; }
-                .sparkle:nth-child(4) { animation-delay: 1.2s; }
+                .sparkle:nth-child(4) { animation-delay: 1.2s; width: 6px; height: 6px; }
                 .sparkle:nth-child(5) { animation-delay: 1.5s; }
-                .sparkle:nth-child(6) { animation-delay: 1.8s; }
-
+                .sparkle:nth-child(6) { animation-delay: 1.8s; width: 5px; height: 5px; }
+                .sparkle:nth-child(7) { animation-delay: 0.5s; }
+                .sparkle:nth-child(8) { animation-delay: 1.0s; }
                 @keyframes sparkle-anim {
                   0% { transform: scale(0); opacity: 0; }
                   50% { transform: scale(1.2); opacity: 1; }
                   100% { transform: scale(0); opacity: 0; }
                 }
-                
-                .confetti-bg {
-                  height: 100%;
-                  width: 100%;
-                  background: transparent;
-                  overflow: hidden;
+
+                /* --- Festive Button Blast --- */
+                .festive-button::after {
+                  content: ''; position: absolute;
+                  top: 50%; left: 50%;
+                  width: 10px; height: 10px;
+                  background: rgba(255, 255, 255, 0.7);
+                  border-radius: 50%;
+                  transform: translate(-50%, -50%) scale(0);
+                  transition: transform 0.4s ease, opacity 0.4s ease;
+                  opacity: 0;
+                }
+                .festive-button:hover::after {
+                  transform: translate(-50%, -50%) scale(20);
+                  opacity: 1;
+                   transition: transform 0.6s ease, opacity 0.8s ease;
+                   opacity:0;
                 }
                 
-                .confetti-bg::before {
-                  content: '';
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 10px;
-                  height: 10px;
-                  background: #fde047;
-                  opacity: 0.7;
-                  animation: confetti-fall 20s linear infinite;
-                  box-shadow: 
-                    20vw 15vh 0 2px #facc15, 40vw 30vh 0 3px #fde047,
-                    60vw 45vh 0 2px #facc15, 80vw 60vh 0 3px #fde047,
-                    -10vw 75vh 0 2px #facc15, 30vw 90vh 0 3px #fde047,
-                    50vw -10vh 0 2px #facc15, 70vw 5vh 0 3px #fde047,
-                    90vw 20vh 0 2px #facc15, 10vw 40vh 0 3px #fde047;
+                /* --- Background Effects --- */
+                .shooting-star {
+                  position: absolute; top: 50%; left: 50%;
+                  height: 2px;
+                  background: linear-gradient(-45deg, #fde047, rgba(0, 0, 0, 0));
+                  border-radius: 999px;
+                  filter: drop-shadow(0 0 6px #fde047);
+                  animation: tail 3s ease-in-out infinite, shooting 3s ease-in-out infinite;
+                }
+                .shooting-star:nth-child(2) { top: 20%; left: 80%; animation-delay: 1s; }
+                .shooting-star:nth-child(3) { top: 70%; left: 20%; animation-delay: 2s; }
+                @keyframes tail { 0% { width: 0; } 30% { width: 100px; } 100% { width: 0; } }
+                @keyframes shooting { 0% { transform: translateX(0); } 100% { transform: translateX(300px); } }
+
+                .fairy-lights {
+                    position: absolute; top: 5%; left: 0; right: 0; height: 20px;
+                }
+                .fairy-lights::before {
+                    content: ''; position: absolute; width: 100%; height: 100%;
+                    background: radial-gradient(circle at 10% 50%, #fde047 2px, transparent 3px),
+                                radial-gradient(circle at 20% 50%, #fde047 3px, transparent 4px),
+                                radial-gradient(circle at 30% 50%, #fde047 2px, transparent 3px),
+                                radial-gradient(circle at 40% 50%, #fde047 3px, transparent 4px),
+                                radial-gradient(circle at 50% 50%, #fde047 2px, transparent 3px),
+                                radial-gradient(circle at 60% 50%, #fde047 3px, transparent 4px),
+                                radial-gradient(circle at 70% 50%, #fde047 2px, transparent 3px),
+                                radial-gradient(circle at 80% 50%, #fde047 3px, transparent 4px),
+                                radial-gradient(circle at 90% 50%, #fde047 2px, transparent 3px);
+                    background-size: 200px 100%;
+                    animation: twinkle 5s linear infinite;
+                }
+                @keyframes twinkle {
+                    0%, 100% { opacity: 0.5; }
+                    50% { opacity: 1; }
                 }
 
+                .confetti-bg::before {
+                  content: ''; position: absolute; top: 0; left: 0;
+                  width: 10px; height: 10px; background: #facc15; opacity: 0.7;
+                  animation: confetti-fall 20s linear infinite;
+                  box-shadow: 20vw 15vh 0 2px #fbbf24, 40vw 30vh 0 3px #fde047, 60vw 45vh 0 2px #facc15, 80vw 60vh 0 3px #fde047;
+                }
                 @keyframes confetti-fall {
                   0% { transform: translateY(-10vh) rotate(0deg); }
                   100% { transform: translateY(110vh) rotate(360deg); }
                 }
 
+                @keyframes aurora {
+                    0% { transform: translate(-20%, -20%) rotate(0deg); }
+                    50% { transform: translate(20%, 20%) rotate(180deg); }
+                    100% { transform: translate(-20%, -20%) rotate(360deg); }
+                }
             `}</style>
         </div>
     );
