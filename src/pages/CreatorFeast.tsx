@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lucide-react';
-// At the top of CreatorFeast.jsx
-import { supabase } from './supabaseEventClient';
+
+// --- Supabase Client Setup ---
+// Safely initialize the client by checking for the global Supabase object.
+let supabaseClient;
+if (window.supabase) {
+    const { createClient } = window.supabase;
+
+    // IMPORTANT: Replace these placeholder values with the actual URL and Anon Key 
+    // from your "ReelHaus Events" Supabase project.
+    const supabaseUrl = 'https://yrrxcjmnptbolmbmbqkw.supabase.co'; 
+    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlycnhjam1ucHRib2xtYm1icWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ2MzAxODMsImV4cCI6MjA3MDIwNjE4M30.YlMdd1S6s3--xv-qtuNe9aXBitJtxCo9AG3SkFPVrcU';
+
+    supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+} else {
+    console.error("Supabase client not found. Make sure the Supabase library is loaded before this script.");
+}
+// --- End Supabase Client Setup ---
 
 const Loader = () => (
   <svg className="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -20,7 +35,8 @@ const CheckSquareIcon = () => (
 const App = () => {
   const [formData, setFormData] = useState({
     fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
-    participationType: '', teamMembers: [], teamLeader: '', transactionId: '', paymentScreenshot: null, consent: false,
+    participationType: '', teamMembers: [], teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '',
+    transactionId: '', paymentScreenshot: null, consent: false,
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,39 +44,35 @@ const App = () => {
   const [fileError, setFileError] = useState('');
 
   const branches = ["CSE", "AIML", "IT", "ECE", "EEE", "Mechanical", "Civil", "Other"];
-  const years = ["2nd Year", "3rd Year", "4th Year"]; // "1st Year" removed
+  const years = ["2nd Year", "3rd Year", "4th Year"];
   const participationOptions = [
     { value: "Individual", label: "Individual (₹9)", amount: 9 },
     { value: "Team of 2", label: "Team of 2 (₹15)", amount: 15 },
     { value: "Team of 3", label: "Team of 3 (₹25)", amount: 25 },
   ];
 
-  // Effect to update team members array when participation type changes
   useEffect(() => {
     let memberCount = 0;
     if (formData.participationType === 'Team of 2') memberCount = 1;
     if (formData.participationType === 'Team of 3') memberCount = 2;
-    
     const newTeamMembers = Array.from({ length: memberCount }, () => ({ name: '', roll: '' }));
-
-    setFormData(prev => ({
-      ...prev,
-      teamMembers: newTeamMembers,
-      teamLeader: '',
-    }));
+    setFormData(prev => ({ ...prev, teamMembers: newTeamMembers, teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '' }));
   }, [formData.participationType]);
 
-  const formContainerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-  };
-  const formItemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } }
-  };
+  useEffect(() => {
+      if (formData.teamLeader === 'you') {
+          setFormData(prev => ({ ...prev, teamLeaderEmail: prev.email, teamLeaderPhone: prev.contactNumber }));
+      } else if(formData.teamLeader !== '') {
+          setFormData(prev => ({...prev, teamLeaderEmail: '', teamLeaderPhone: ''}));
+      }
+  }, [formData.teamLeader, formData.email, formData.contactNumber]);
+
+  const formContainerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
+  const formItemVariants = { hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 100 } } };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type } = e.target;
+    const checked = e.target.checked;
     setFormData(prevState => ({ ...prevState, [name]: type === 'checkbox' ? checked : value }));
   };
   
@@ -73,34 +85,102 @@ const App = () => {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     setFileError('');
-    if (file && file.size > 5 * 1024 * 1024) { // 5MB limit
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
       setFileError('File is too large. Max size is 5MB.');
       setFormData(prevState => ({...prevState, paymentScreenshot: null}));
       e.target.value = '';
       return;
     }
-    setFormData(prevState => ({ ...prevState, paymentScreenshot: file || null }));
+    setFormData(prevState => ({ ...prevState, paymentScreenshot: file }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isSubmitting) return;
+    if (isSubmitting || !supabaseClient) {
+        if(!supabaseClient) {
+            setSubmitMessage("Error: Supabase client not initialized. Cannot submit form.");
+        }
+        return;
+    };
+
     setIsSubmitting(true);
-    setSubmitMessage('');
+    setSubmitMessage('Submitting, please wait...');
     setFileError('');
+
     try {
-      console.log("Submitting Form Data:", formData);
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const { data: existingTx, error: txError } = await supabaseClient
+        .from('creator_feast_registrations')
+        .select('transaction_id')
+        .eq('transaction_id', formData.transactionId)
+        .maybeSingle();
+
+      if (txError) throw txError;
+      if (existingTx) {
+        throw new Error("This Transaction ID has already been used.");
+      }
+
+      let screenshot_url = null;
+      if (formData.paymentScreenshot) {
+        const file = formData.paymentScreenshot;
+        const fileName = `${Date.now()}-${file.name}`;
+        
+        const { error: uploadError } = await supabaseClient.storage
+          .from('payment-screenshots')
+          .upload(fileName, file);
+
+        if (uploadError) throw uploadError;
+
+        const { data: urlData } = supabaseClient.storage
+          .from('payment-screenshots')
+          .getPublicUrl(fileName);
+        screenshot_url = urlData.publicUrl;
+      }
+
+      const leaderName = formData.teamLeader === 'you' 
+          ? formData.fullName 
+          : formData.teamMembers[parseInt(formData.teamLeader, 10)]?.name;
+      const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
+      const fullTeam = [{name: formData.fullName, roll: formData.rollNumber}, ...formData.teamMembers];
+
+      const { data: insertData, error: insertError } = await supabaseClient
+        .from('creator_feast_registrations')
+        .insert([{
+          full_name: formData.fullName,
+          roll_number: formData.rollNumber,
+          branch: finalBranch,
+          study_year: formData.year,
+          contact_number: formData.contactNumber,
+          email: formData.email,
+          participation_type: formData.participationType,
+          team_members: fullTeam,
+          team_leader_name: leaderName,
+          team_leader_email: formData.teamLeaderEmail,
+          team_leader_phone: formData.teamLeaderPhone,
+          transaction_id: formData.transactionId,
+          screenshot_url: screenshot_url,
+          has_consented: formData.consent,
+        }])
+        .select();
+
+      if (insertError) throw insertError;
+      
+      if (!insertData || insertData.length === 0) {
+          throw new Error("Data was not saved. Please check Row Level Security (RLS) policies in your Supabase project.");
+      }
+
       setSubmitMessage('Registration successful! We look forward to seeing you.');
       setFormData({
         fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
-        participationType: '', teamMembers: [], teamLeader: '', transactionId: '', paymentScreenshot: null, consent: false,
+        participationType: '', teamMembers: [], teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '',
+        transactionId: '', paymentScreenshot: null, consent: false,
       });
       const fileInput = document.getElementById('paymentScreenshot');
       if (fileInput) fileInput.value = '';
+
     } catch (error) {
-      setSubmitMessage('Error: Could not submit registration.');
-      console.error("Submission Error:", error);
+      setSubmitMessage(`Error: ${error.message || 'Could not submit registration.'}`);
+      console.error("Error submitting to Supabase:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -109,7 +189,6 @@ const App = () => {
   const inputStyles = "w-full p-4 bg-gray-900/50 rounded-lg border border-gray-700 placeholder:text-gray-500 transition-all duration-300 focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 focus:bg-gray-900 outline-none";
   const eventPosterUrl = "https://i.postimg.cc/26Cm8RrV/rh-feast-13-sep.jpg";
   const qrCodeUrl = "https://i.postimg.cc/g0Fz8M46/Whats-App-Image-2025-09-01-at-15-08-27-8699489e.jpg";
-  
   const paymentAmount = participationOptions.find(opt => opt.value === formData.participationType)?.amount || 0;
 
   return (
@@ -117,10 +196,8 @@ const App = () => {
       <section className="relative py-20 md:py-32 bg-gradient-to-b from-gray-900 via-black to-black overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-10 bg-[radial-gradient(theme(colors.yellow.400)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_50%,transparent_100%)]"></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-12 items-center">
-          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }}>
-            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.5)]">
-              ReelHaus Creator Feast
-            </h1>
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} >
+            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 mb-6 drop-shadow-[0_0_35px_rgba(234,179,8,0.5)]"> ReelHaus Creator Feast </h1>
             <div className="space-y-4 text-lg text-gray-300 mb-6">
               <p className="flex items-center gap-3"><Calendar className="w-5 h-5 text-yellow-400" /><strong>Date:</strong> 13th September</p>
               <p className="flex items-center gap-3"><Clock className="w-5 h-5 text-yellow-400" /><strong>Time:</strong> 9:50 AM Onwards</p>
@@ -136,7 +213,7 @@ const App = () => {
               </ul>
             </div>
           </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }} className="flex justify-center">
+          <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }} className="flex justify-center" >
             <img src={eventPosterUrl} alt="ReelHaus Creator Feast Poster" className="rounded-2xl shadow-2xl shadow-yellow-400/20 w-full max-w-sm border-4 border-yellow-400/30" />
           </motion.div>
         </div>
@@ -180,16 +257,14 @@ const App = () => {
               <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email ID*" required className={inputStyles} />
             </motion.div>
             
-            {/* START: Added confirmation message note */}
             <motion.div variants={formItemVariants} className="-mt-4 text-center">
-                <div className="inline-block bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
-                    <p className="text-sm text-yellow-300">
-                        Your confirmation message and event ticket will be sent to this phone number and email address.
-                    </p>
-                </div>
+               <div className="inline-block bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-3 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                   <p className="text-sm text-yellow-300">
+                       Your confirmation message and event ticket will be sent to this phone number and email address.
+                   </p>
+               </div>
             </motion.div>
-            {/* END: Added confirmation message note */}
-            
+
             <motion.div variants={formItemVariants}>
               <label className="block text-lg font-semibold text-white mb-4">Participation Type*</label>
               <div className="flex flex-col md:flex-row gap-4 md:gap-8">
@@ -208,7 +283,7 @@ const App = () => {
             <AnimatePresence>
               {formData.teamMembers.length > 0 && (
                 <motion.div variants={formItemVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20">
-                    <h3 className="text-lg font-semibold text-white">Team Member Details</h3>
+                    <h3 className="text-lg font-semibold text-white">Team Details</h3>
                     {formData.teamMembers.map((member, index) => (
                        <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                            <input type="text" value={member.name} onChange={(e) => handleTeamMemberChange(index, 'name', e.target.value)} placeholder={`Team Member ${index + 2} Name*`} required className={inputStyles} />
@@ -218,28 +293,38 @@ const App = () => {
                     <div className="relative">
                         <select name="teamLeader" value={formData.teamLeader} onChange={handleChange} required className={`appearance-none ${inputStyles}`}>
                           <option value="" disabled>Select Team Leader*</option>
-                          <option value={formData.fullName}>{formData.fullName} (You)</option>
+                          <option value="you">{formData.fullName || 'You'}</option>
                           {formData.teamMembers.filter(m => m.name.trim() !== '').map((member, index) => (
-                            <option key={index} value={member.name}>{member.name}</option>
+                            <option key={index} value={index}>{member.name}</option>
                           ))}
                         </select>
                         <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"><ChevronDown className="w-6 h-6" /></div>
                     </div>
+
+                    <AnimatePresence>
+                      {formData.teamLeader !== '' && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="space-y-4 pt-4 border-t border-gray-700">
+                           <input type="email" name="teamLeaderEmail" value={formData.teamLeaderEmail} onChange={handleChange} placeholder="Team Leader's Email ID*" required readOnly={formData.teamLeader === 'you'} className={`${inputStyles} ${formData.teamLeader === 'you' ? 'bg-gray-800 cursor-not-allowed' : ''}`} />
+                           <input type="tel" name="teamLeaderPhone" value={formData.teamLeaderPhone} onChange={handleChange} placeholder="Team Leader's Contact Number*" required pattern="[0-9]{10}" readOnly={formData.teamLeader === 'you'} className={`${inputStyles} ${formData.teamLeader === 'you' ? 'bg-gray-800 cursor-not-allowed' : ''}`} />
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
                 </motion.div>
               )}
             </AnimatePresence>
-
+            
             <AnimatePresence>
               {paymentAmount > 0 && (
-                <motion.div variants={formItemVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20">
-                  <h3 className="text-xl font-semibold text-white">Payment Details (UPI Only)</h3>
+                <motion.div variants={formItemVariants} initial="hidden" animate="visible" exit="hidden" className="space-y-6 p-6 bg-gray-900 rounded-lg border border-yellow-400/20" >
+                  <h3 className="text-xl font-semibold text-white text-center">Payment Details (UPI Only)</h3>
                   <div className="flex flex-col md:flex-row items-center gap-8">
-                    <div className="text-center">
-                        <img src={qrCodeUrl} alt="Payment QR Code" className="w-64 h-64 rounded-lg mx-auto border-2 border-gray-700"/>
-                        <p className="mt-2 text-yellow-400 font-bold text-2xl">Pay: ₹{paymentAmount}</p>
+                    <div className="text-center flex-shrink-0">
+                      <img src={qrCodeUrl} alt="Payment QR Code" className="w-48 h-48 md:w-56 md:h-56 rounded-lg mx-auto border-2 border-gray-700 p-1 bg-white"/>
+                      <p className="mt-2 text-yellow-400 font-bold text-2xl">Pay: ₹{paymentAmount}</p>
                     </div>
                     <div className="w-full space-y-6">
-                      <p className='text-gray-400'>1. Scan the QR code to complete the payment. <br/> 2. Enter the Transaction ID below and upload a screenshot.</p>
+                      <p className='text-gray-400 text-center md:text-left'>1. Scan the QR code to complete the payment. <br/> 2. Enter the Transaction ID and upload a screenshot.</p>
                       <input type="text" name="transactionId" value={formData.transactionId} onChange={handleChange} placeholder="Transaction ID*" required className={inputStyles} />
                       <div>
                         <label htmlFor="paymentScreenshot" className="block text-md text-white mb-2">Upload Screenshot* (max 5MB)</label>
