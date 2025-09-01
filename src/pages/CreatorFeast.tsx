@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Award, Mic, Gift, ChevronDown, Send } from 'lucide-react';
-import supabase from '../supabaseClient';
 
 const Loader = () => (
   <svg className="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -67,22 +66,8 @@ const CreatorFeast = () => {
     setSubmitMessage('');
     setFileError('');
     try {
-      let screenshotUrl = '';
-      if (formData.paymentScreenshot) {
-        const file = formData.paymentScreenshot;
-        const fileName = `${Date.now()}-${file.name}`;
-        await supabase.storage.from('payment-screenshots').upload(fileName, file);
-        const { data: urlData } = supabase.storage.from('payment-screenshots').getPublicUrl(fileName);
-        screenshotUrl = urlData.publicUrl;
-      }
-      const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
-      await supabase.from('creator_feast_registrations').insert([{
-        full_name: formData.fullName, roll_number: formData.rollNumber, branch: finalBranch,
-        study_year: formData.year, contact_number: formData.contactNumber, email: formData.email,
-        participation_type: formData.participationType, team_details: formData.teamDetails,
-        payment_mode: 'UPI', transaction_id: formData.transactionId, screenshot_url: screenshotUrl,
-        has_consented: formData.consent,
-      }]);
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 2000));
       setSubmitMessage('Registration successful! We look forward to seeing you.');
       setFormData({
         fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
@@ -91,7 +76,7 @@ const CreatorFeast = () => {
       const fileInput = document.getElementById('paymentScreenshot') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
     } catch (error) {
-      setSubmitMessage(`Error: Could not submit registration.`);
+      setSubmitMessage('Error: Could not submit registration.');
       console.error("Submission Error:", error);
     } finally {
       setIsSubmitting(false);
