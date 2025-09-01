@@ -102,7 +102,7 @@ const handleSubmit = async (e) => {
     if (txError) throw txError;
     if (existingTx) throw new Error("This Transaction ID has already been used.");
 
-    // 2️⃣ Upload screenshot if available
+    // 2️⃣ Upload payment screenshot (if any)
     let screenshot_url = null;
     if (formData.paymentScreenshot) {
       const file = formData.paymentScreenshot;
@@ -121,14 +121,15 @@ const handleSubmit = async (e) => {
       screenshot_url = urlData.publicUrl;
     }
 
-    // 3️⃣ Prepare team data
-    const leaderName = formData.teamLeader === 'you' 
-      ? formData.fullName 
+    // 3️⃣ Prepare team leader and team members
+    const leaderName = formData.teamLeader === 'you'
+      ? formData.fullName
       : formData.teamMembers[parseInt(formData.teamLeader, 10)]?.name;
+
     const finalBranch = formData.branch === 'Other' ? formData.otherBranch : formData.branch;
     const fullTeam = [{ name: formData.fullName, roll: formData.rollNumber }, ...formData.teamMembers];
 
-    // 4️⃣ Insert into Supabase
+    // 4️⃣ Insert registration into Supabase
     const { data: insertData, error: insertError } = await supabase
       .from('creator_feast_registrations')
       .insert([{
@@ -151,42 +152,17 @@ const handleSubmit = async (e) => {
 
     if (insertError) throw insertError;
     if (!insertData || insertData.length === 0) {
-      throw new Error("Data was not saved. Check Row Level Security (RLS) policies in Supabase.");
+      throw new Error("Data was not saved. Check Row Level Security (RLS) in Supabase.");
     }
 
-    // 5️⃣ Send payload to n8n webhook (CORS-safe)
-    try {
-      const webhookResponse = await fetch("https://udaykumar-rh.app.n8n.cloud/webhook-test/creator-feast-registration", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        mode: "cors", // Required for cross-origin requests
-        body: JSON.stringify({
-          full_name: formData.fullName,
-          email: formData.email,
-          phone: formData.contactNumber
-        }),
-      });
-
-      if (!webhookResponse.ok) {
-        const text = await webhookResponse.text();
-        console.warn("n8n webhook warning:", text || webhookResponse.status);
-      }
-
-    } catch (webhookError) {
-      console.warn("Error sending data to n8n webhook:", webhookError);
-      // Do not block user submission
-    }
-
-    // 6️⃣ Reset form and show success message
+    // ✅ Success: n8n webhook triggered automatically by database trigger
     setSubmitMessage('Registration successful! We look forward to seeing you.');
     setFormData({
       fullName: '', rollNumber: '', branch: '', otherBranch: '', year: '', contactNumber: '', email: '',
       participationType: '', teamMembers: [], teamLeader: '', teamLeaderEmail: '', teamLeaderPhone: '',
       transactionId: '', paymentScreenshot: null, consent: false,
     });
+
     const fileInput = document.getElementById('paymentScreenshot');
     if (fileInput) fileInput.value = '';
 
@@ -197,7 +173,6 @@ const handleSubmit = async (e) => {
     setIsSubmitting(false);
   }
 };
-
 
   const inputStyles = "w-full p-4 bg-gray-900/50 rounded-lg border border-gray-700 placeholder:text-gray-500 transition-all duration-300 focus:ring-2 focus:ring-yellow-400/50 focus:border-yellow-400 focus:bg-gray-900 outline-none";
   const eventPosterUrl = "https://i.postimg.cc/26Cm8RrV/rh-feast-13-sep.jpg";
